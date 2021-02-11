@@ -1,0 +1,6 @@
+
+=[user]
+    name = "Yoshi Yamaguchi"
+
+[includeIf "gitdir:~/personal/"]
+    path = ~/.gitconfig.personal

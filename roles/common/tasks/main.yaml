@@ -1,0 +1,24 @@
+---
+- name: Create personal directory
+  ansible.builtin.file:
+    path: ~/personal
+    state: directory
+    mode: '0644'
+  become: yes
+
+- name: Get the status of Go target directory
+  ansible.builtin.stat:
+    path: ~/personal
+  register: personal_target_dir
+
+- name: Copy git configuration file (part 1)
+  ansible.builtin.template:
+    src: .gitconfig
+    dest: ~/.gitconfig
+    mode: 0600
+
+- name: Copy git configuration file (part 2)
+  ansible.builtin.template:
+    src: .gitconfig.personal
+    dest: ~/.gitconfig.personal
+    mode: 0600
