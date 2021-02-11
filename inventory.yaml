@@ -1,0 +1,5 @@
+all:
+  children:
+    dev:
+      hosts:
+        # add hostname or IP addresses

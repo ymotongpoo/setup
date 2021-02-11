@@ -1,0 +1,64 @@
+---
+# Go version
+go_version: 1.15.8
+
+# PGP keys for external repositories
+pgp_keys:
+- url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  keyring: /usr/share/keyrings/cloud.google.gpg
+- url: https://download.docker.com/linux/debian/gpg
+  keyring:
+
+# apt repositories
+debian_10_apt_repositories:
+- repo: deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+  state: present
+- repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+  state: present
+
+# apt packages
+precondition_apt_packages:
+- name: apt-transport-https
+  state: latest
+- name: ca-certificates
+  state: latest
+- name: gnupg
+  state: latest
+- name: gnupg-agent
+  state: latest
+- name: wget
+  state: latest
+- name: curl
+  state: latest
+- name: unzip
+  state: latest
+- name: software-properties-common
+  state: latest
+
+basic_apt_packages:
+- name: git
+  state: latest
+- name: zsh
+  state: latest
+- name: build-essential
+  state: latest
+- name: emacs
+  state: latest
+- name: python3
+  state: latest
+- name: google-cloud-sdk
+  state: latest
+- name: google-cloud-sdk-app-engine-go
+  state: latest
+- name: google-cloud-sdk-app-engine-python
+  state: latest
+- name: google-cloud-sdk-app-engine-python
+  state: latest
+- name: kubectl
+  state: latest
+- name: docker-ce
+  state: latest
+- name: docker-ce-cli
+  state: latest
+- name: containerd.io
+  state: latest
