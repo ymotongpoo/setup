@@ -2,5 +2,5 @@ Host github.com
     HostName github.com
     User git
     Port 22
-    IdentityFile ~/.ssh/github
+    IdentityFile ~/.ssh/github-nopass
     IdentitiesOnly yes

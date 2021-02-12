@@ -6,7 +6,5 @@ symbolic_links:
   dest: ~/.zshenv
 - src: ~/.dotfiles/.emacs.d
   dest: ~/.emacs.d
-- src: ~/.dotfiles/.vim
-  dest: ~/.vim
 - src: ~/.dotfiles/.tmux.conf.linux
   dest: ~/.tmux.conf
