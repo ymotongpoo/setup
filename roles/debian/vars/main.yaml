@@ -44,7 +44,15 @@ basic_apt_packages:
   state: latest
 - name: emacs
   state: latest
+- name: vim
+  state: latest
 - name: python3
+  state: latest
+- name: tmux
+  state: latest
+- name: jq
+  state: latest
+- name: silversearcher-ag
   state: latest
 - name: google-cloud-sdk
   state: latest

@@ -1,0 +1,12 @@
+---
+symbolic_links:
+- src: ~/.dotfiles/.zshrc
+  dest: ~/.zshrc
+- src: ~/.dotfiles/.zshenv.linux
+  dest: ~/.zshenv
+- src: ~/.dotfiles/.emacs.d
+  dest: ~/.emacs.d
+- src: ~/.dotfiles/.vim
+  dest: ~/.vim
+- src: ~/.dotfiles/.tmux.conf.linux
+  dest: ~/.tmux.conf

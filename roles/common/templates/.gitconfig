@@ -1,5 +1,4 @@
-
-=[user]
+[user]
     name = "Yoshi Yamaguchi"
 
 [includeIf "gitdir:~/personal/"]
