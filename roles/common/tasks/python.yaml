@@ -1,0 +1,23 @@
+---
+- name: Create directory for venv pool
+  ansible.builtin.file:
+    path: ~/python
+    state: directory
+    mode: '0755'
+
+- name: Get the status of Go target directory
+  ansible.builtin.stat:
+    path: ~/python
+  register: venv_dir
+
+- name: Create misc venv environment
+  ansible.builtin.shell:
+    cmd: /usr/bin/python3 -m venv ~/python/misc
+  when:
+  - venv_dir.stat.exists
+
+- name: Update pip to the latest
+  ansible.builtin.shell:
+    cmd: ~/python/misc/bin/pip install --upgrade pip
+  when:
+  - venv_dir.stat.exists

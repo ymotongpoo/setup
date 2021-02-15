@@ -1,4 +1,4 @@
 ansible
 requests
 google-auth
-python3-apt
+molecule

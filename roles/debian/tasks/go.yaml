@@ -1,0 +1,21 @@
+---
+- name: Prepare target directory for Go
+  ansible.builtin.file:
+    path: /opt/go
+    state: directory
+    mode: '0644'
+  become: yes
+
+- name: Get the status of Go target directory
+  ansible.builtin.stat:
+    path: /opt/go
+  register: go_target_dir
+
+- name: Install Go
+  ansible.builtin.unarchive:
+    src: "https://golang.org/dl/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: /opt/
+    mode: '0755'
+    remote_src: yes
+  become: yes
+  when: go_target_dir.stat.exists

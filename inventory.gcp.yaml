@@ -1,0 +1,23 @@
+---
+# This inventory is using gcp_compute plugin. Install the plugin in advance of the execution.
+# $ ansible-galaxy collection install google.cloud
+# https://docs.ansible.com/ansible/latest/collections/google/cloud/gcp_compute_inventory.html
+plugin: google.cloud.gcp_compute
+zones: # populate inventory with instances in these regions
+  - asia-northeast1-b
+  - asia-northeast1-a
+  - asia-northeast2-b
+  - asia-northeast2-a
+  - asia-east1-b
+projects: development-215403
+service_account_file: ~/.credentials/ansible-service-account.json
+auth_kind: serviceaccount
+scopes:
+ - 'https://www.googleapis.com/auth/compute'
+hostnames:
+  # List host by name instead of the default public ip
+  - 'name'
+compose:
+  # Set an inventory parameter to use the Public IP address to connect to the host
+  # For Private ip use "networkInterfaces[0].networkIP"
+  ansible_host: networkInterfaces[0].accessConfigs[0].natIP

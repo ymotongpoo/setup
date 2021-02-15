@@ -1,0 +1,55 @@
+---
+- name: Create personal directory
+  ansible.builtin.file:
+    path: ~/personal
+    state: directory
+    mode: '0644'
+
+- name: Get the status of Go target directory
+  ansible.builtin.stat:
+    path: ~/personal
+  register: personal_target_dir
+
+- name: Copy git configuration file (part 1)
+  ansible.builtin.template:
+    src: .gitconfig
+    dest: ~/.gitconfig
+    mode: 0600
+
+- name: Copy git configuration file (part 2)
+  ansible.builtin.template:
+    src: .gitconfig.personal
+    dest: ~/.gitconfig.personal`
+    mode: 0600
+
+- name: Distribute ssh private key for GitHub
+  ansible.builtin.copy:
+    src: ~/.ssh/github-nopass
+    dest: ~/.ssh/github-nopass
+    mode: 0600
+
+- name: Copy ssh config
+  ansible.builtin.template:
+    src: ssh_config
+    dest: ~/.ssh/config
+    mode: 0600
+
+- name: Clone dotfile repository
+  ansible.builtin.git:
+    repo: git@github.com:ymotongpoo/dotfiles.git
+    dest: ~/.dotfiles
+    recursive: yes
+    key_file: ~/.ssh/github-nopass
+    accept_hostkey: yes
+
+- name: Symbolic links
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  with_items: "{{ symbolic_links }}"
+
+- name: Change default shell
+  ansible.builtin.shell:
+    cmd: chsh -s /usr/bin/zsh {{ lookup('env', 'USER') }}
+  become: yes
