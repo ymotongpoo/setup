@@ -83,3 +83,38 @@ resource "google_compute_instance" "debian10" {
         EOL
     }
 }
+
+resource "google_compute_instance" "arch_dev" {
+    name = "dev"
+    machine_type = "e2-standard-2"
+    zone = var.zone
+    tags = ["dev-env"]
+
+    boot_disk {
+        initialize_params {
+            image = "arch/arch-linux-gce"
+        }
+    }
+
+    network_interface {
+        network = "default"
+        access_config {}
+    }
+
+    scheduling {
+        automatic_restart = true
+    }
+
+    depends_on = [google_compute_firewall.dev_http]
+
+    service_account {
+        scopes = ["compute-rw", "logging-write", "monitoring"]
+    }
+
+    provisioner "local-exec" {
+        working_dir = "./ansible/"
+        command = <<EOL
+        ansible-playbook -i hosts/inventory.gcp.yaml arch.yaml
+        EOL
+    }
+}
