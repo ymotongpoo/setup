@@ -13,6 +13,18 @@
   with_items: "{{ pgp_keys }}"
   become: yes
 
+- name: Update apt repository
+  ansible.builtin.apt:
+    update_cache: yes
+  become: yes
+
+- name: Remove packages for docker installation
+  ansible.builtin.apt:
+    name: "{{ item.name }}"
+    state: absent
+  with_items: "{{ docker_removal_apt_package }}"
+  become: yes
+
 - name: Add external apt repositories
   ansible.builtin.apt_repository:
     repo: "{{ item.repo }}"
@@ -30,4 +42,14 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   with_items: "{{ basic_apt_packages }}"
+  become: yes
+
+- name: Remove unused cached packages
+  ansible.builtin.apt:
+    autoclean: yes
+  become: yes
+
+- name: Remove no dependent packages
+  ansible.builtin.apt:
+    autoremove: yes
   become: yes

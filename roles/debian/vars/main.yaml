@@ -35,6 +35,13 @@ precondition_apt_packages:
 - name: software-properties-common
   state: latest
 
+docker_removal_apt_package:
+- name: docker
+- name: docker-engine
+- name: docker.io
+- name: containerd
+- name: runc
+
 basic_apt_packages:
 - name: git
   state: latest
