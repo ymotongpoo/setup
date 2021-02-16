@@ -79,7 +79,7 @@ resource "google_compute_instance" "debian10" {
     provisioner "local-exec" {
         working_dir = "./ansible/"
         command = <<EOL
-        ansible-playbook -i inventory.gcp.yaml debian.yaml
+        ansible-playbook -i hosts/inventory.gcp.yaml debian.yaml
         EOL
     }
 }
