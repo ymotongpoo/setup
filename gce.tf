@@ -49,9 +49,9 @@ resource "google_compute_firewall" "dev_http" {
     target_tags = ["tracability-sample"]
 }
 
-resource "google_compute_instance" "debian10" {
+resource "google_compute_instance" "debian10_dev" {
     name = "dev"
-    machine_type = "e2-standard-2"
+    machine_type = "e2-standard-4"
     zone = var.zone
     tags = ["dev-env"]
 
@@ -80,6 +80,41 @@ resource "google_compute_instance" "debian10" {
         working_dir = "./ansible/"
         command = <<EOL
         ansible-playbook -i hosts/inventory.gcp.yaml debian.yaml
+        EOL
+    }
+}
+
+resource "google_compute_instance" "ubuntu2004_dev" {
+    name = "dev"
+    machine_type = "e2-standard-4"
+    zone = var.zone
+    tags = ["dev-env"]
+
+    boot_disk {
+        initialize_params {
+            image = "ubuntu-os-cloud/ubuntu-2004-lts"
+        }
+    }
+
+    network_interface {
+        network = "default"
+        access_config {}
+    }
+
+    scheduling {
+        automatic_restart = true
+    }
+
+    depends_on = [google_compute_firewall.dev_http]
+
+    service_account {
+        scopes = ["compute-rw", "logging-write", "monitoring"]
+    }
+
+    provisioner "local-exec" {
+        working_dir = "./ansible/"
+        command = <<EOL
+        ansible-playbook -i hosts/inventory.gcp.yaml ubuntu.yaml
         EOL
     }
 }
