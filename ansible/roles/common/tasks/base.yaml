@@ -3,7 +3,7 @@
   ansible.builtin.file:
     path: ~/personal
     state: directory
-    mode: '0644'
+    mode: 0644
 
 - name: Get the status of Go target directory
   ansible.builtin.stat:

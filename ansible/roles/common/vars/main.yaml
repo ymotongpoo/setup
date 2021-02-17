@@ -1,4 +1,7 @@
 ---
+# Go version
+go_version: 1.16
+
 symbolic_links:
 - src: ~/.dotfiles/.zshrc
   dest: ~/.zshrc

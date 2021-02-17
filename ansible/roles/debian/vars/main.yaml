@@ -1,7 +1,4 @@
 ---
-# Go version
-go_version: 1.15.8
-
 # PGP keys for external repositories
 pgp_keys:
 - url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
@@ -86,3 +83,4 @@ basic_apt_packages:
 - name: containerd.io
   state: latest
 - name: terraform
+  state: latest
