@@ -21,9 +21,18 @@
     path: "{{ venv_root.stat.path }}/requirements.txt"
   register: requirements_file
 
+- name: Update pip in misc venv
+  ansible.builtin.pip:
+    name: pip
+    state: latest
+    virtualenv: "{{ venv_root.stat.path }}/misc"
+    virtualenv_command: "/usr/bin/python3 -m venv"
+  when: venv_root.stat.exists
+
 - name: Install Python packages into misc venv
   ansible.builtin.pip:
     requirements: "{{ requirements_file.stat.path }}"
     virtualenv: "{{ venv_root.stat.path }}/misc"
     virtualenv_command: "/usr/bin/python3 -m venv"
+  when: venv_root.stat.exists
 
