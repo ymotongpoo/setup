@@ -1,4 +1,7 @@
 ---
+# Go version
+go_install_version: 1.16
+
 symbolic_links:
 - src: ~/.dotfiles/.zshrc
   dest: ~/.zshrc
@@ -8,3 +11,13 @@ symbolic_links:
   dest: ~/.emacs.d
 - src: ~/.dotfiles/.tmux.conf.linux
   dest: ~/.tmux.conf
+- src: ~/.dotfiles/.Xresources
+  dest: ~/.Xresources
+
+github_binary_releases:
+- repo: peco/peco
+  version: v0.5.8
+  asset: peco_linux_amd64.tar.gz
+- repo: github/hub
+  version: v2.14.2
+  asset: hub-linux-amd64-2.14.2.tgz

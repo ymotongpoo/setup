@@ -3,7 +3,7 @@
   ansible.builtin.file:
     path: ~/personal
     state: directory
-    mode: '0644'
+    mode: 0644
 
 - name: Get the status of Go target directory
   ansible.builtin.stat:
@@ -19,7 +19,7 @@
 - name: Copy git configuration file (part 2)
   ansible.builtin.template:
     src: .gitconfig.personal
-    dest: ~/.gitconfig.personal`
+    dest: ~/.gitconfig.personal
     mode: 0600
 
 - name: Distribute ssh private key for GitHub
@@ -49,7 +49,10 @@
     state: link
   with_items: "{{ symbolic_links }}"
 
-- name: Change default shell
-  ansible.builtin.shell:
-    cmd: chsh -s /usr/bin/zsh {{ lookup('env', 'USER') }}
-  become: yes
+- name: Create personal binary directory
+  ansible.builtin.file:
+    path: ~/bin
+    state: directory
+    mode: 0755
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"

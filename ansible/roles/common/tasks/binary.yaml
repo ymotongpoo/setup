@@ -1,0 +1,13 @@
+---
+- name: Install binary release archive and extraction
+  ansible.builtin.unarchive:
+    src: "https://github.com/{{ item.repo }}/releases/download/{{ item.version }}/{{ item.asset }}"
+    dest: "/home/{{ ansible_user }}/bin"
+    remote_src: yes
+  with_items: "{{ github_binary_releases }}"
+
+- name: Install binary release
+  ansible.builtin.get_url:
+    url: https://github.com/vrothberg/vgrep/releases/download/v2.5.1/vgrep_2.5.1_Linux_x86_64
+    dest: "/home/{{ ansible_user }}/bin/vgrep"
+    mode: 0755

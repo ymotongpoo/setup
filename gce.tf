@@ -36,6 +36,16 @@ provider "google" {
     region = var.region
 }
 
+variable "gce_ssh_user" {
+    type = string
+    description = "username for SSH"
+    default = "demo"
+}
+variable "gce_ssh_pub_key_file" {
+    type = string
+    description = "path the public key file"
+    default = "~/.ssh/gcp_terraform.pub"
+}
 resource "google_compute_firewall" "dev_http" {
     name = "dev-http"
     network = "default"
@@ -50,8 +60,8 @@ resource "google_compute_firewall" "dev_http" {
 }
 
 resource "google_compute_instance" "debian10" {
-    name = "dev"
-    machine_type = "e2-standard-2"
+    name = "debian10"
+    machine_type = "e2-standard-4"
     zone = var.zone
     tags = ["dev-env"]
 
@@ -76,6 +86,11 @@ resource "google_compute_instance" "debian10" {
         scopes = ["compute-rw", "logging-write", "monitoring"]
     }
 
+    metadata = {
+        block-project-ssh-keys = "true"
+        ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
+    }
+
     provisioner "local-exec" {
         working_dir = "./ansible/"
         command = <<EOL
@@ -84,8 +99,48 @@ resource "google_compute_instance" "debian10" {
     }
 }
 
+resource "google_compute_instance" "ubuntu2004" {
+    name = "ubuntu2004"
+    machine_type = "e2-standard-4"
+    zone = var.zone
+    tags = ["dev-env"]
+
+    boot_disk {
+        initialize_params {
+            image = "ubuntu-os-cloud/ubuntu-2004-lts"
+        }
+    }
+
+    network_interface {
+        network = "default"
+        access_config {}
+    }
+
+    scheduling {
+        automatic_restart = true
+    }
+
+    depends_on = [google_compute_firewall.dev_http]
+
+    service_account {
+        scopes = ["compute-rw", "logging-write", "monitoring"]
+    }
+
+    metadata = {
+        block-project-ssh-keys = "true"
+        ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
+    }
+
+    provisioner "local-exec" {
+        working_dir = "./ansible/"
+        command = <<EOL
+        ansible-playbook -i hosts/inventory.gcp.yaml ubuntu.yaml
+        EOL
+    }
+}
+
 resource "google_compute_instance" "arch_dev" {
-    name = "dev"
+    name = "arch"
     machine_type = "e2-standard-2"
     zone = var.zone
     tags = ["dev-env"]
@@ -109,6 +164,11 @@ resource "google_compute_instance" "arch_dev" {
 
     service_account {
         scopes = ["compute-rw", "logging-write", "monitoring"]
+    }
+
+    metadata = {
+        block-project-ssh-keys = "true"
+        ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
     }
 
     provisioner "local-exec" {

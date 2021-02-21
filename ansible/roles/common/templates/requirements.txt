@@ -1,0 +1,16 @@
+ansible
+molecule
+google-auth
+requests
+fabric
+black
+flake8
+isort
+mypy
+poetry
+pytest
+pandas
+altair
+luigi
+youtube-dl
+streamlink

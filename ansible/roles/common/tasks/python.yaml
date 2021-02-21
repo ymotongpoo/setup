@@ -3,21 +3,36 @@
   ansible.builtin.file:
     path: ~/python
     state: directory
-    mode: '0755'
+    mode: 0755
 
-- name: Get the status of Go target directory
+- name: Get the status of Python venv root directory
   ansible.builtin.stat:
     path: ~/python
-  register: venv_dir
+  register: venv_root
 
-- name: Create misc venv environment
-  ansible.builtin.shell:
-    cmd: /usr/bin/python3 -m venv ~/python/misc
-  when:
-  - venv_dir.stat.exists
+- name: Copy requirements.txt
+  ansible.builtin.template:
+    src: requirements.txt
+    dest: "{{ venv_root.stat.path }}/requirements.txt"
+  when: venv_root.stat.exists
 
-- name: Update pip to the latest
-  ansible.builtin.shell:
-    cmd: ~/python/misc/bin/pip install --upgrade pip
-  when:
-  - venv_dir.stat.exists
+- name: Confirm the existance of requirements.txt
+  ansible.builtin.stat:
+    path: "{{ venv_root.stat.path }}/requirements.txt"
+  register: requirements_file
+
+- name: Update pip in misc venv
+  ansible.builtin.pip:
+    name: pip
+    state: latest
+    virtualenv: "{{ venv_root.stat.path }}/misc"
+    virtualenv_command: "/usr/bin/python3 -m venv"
+  when: venv_root.stat.exists
+
+- name: Install Python packages into misc venv
+  ansible.builtin.pip:
+    requirements: "{{ requirements_file.stat.path }}"
+    virtualenv: "{{ venv_root.stat.path }}/misc"
+    virtualenv_command: "/usr/bin/python3 -m venv"
+  when: venv_root.stat.exists
+
