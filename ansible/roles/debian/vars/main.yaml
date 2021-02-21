@@ -64,6 +64,10 @@ basic_apt_packages:
   state: latest
 - name: jq
   state: latest
+- name: fzf
+  state: latest
+- name: fd-find
+  state: latest
 - name: silversearcher-ag
   state: latest
 - name: sysstat
@@ -93,6 +97,8 @@ basic_apt_packages:
 - name: docker-ce-cli
   state: latest
 - name: containerd.io
+  state: latest
+- name: ctop
   state: latest
 - name: terraform
   state: latest

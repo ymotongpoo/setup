@@ -21,4 +21,8 @@
       dest: github.com/gohugoio/hugo
       version: v0.81.0
       package: github.com/gohugoio/hugo
+    - repo: https://github.com/jesseduffield/lazydocker.git
+      dest: github.com/jesseduffield/lazydocker
+      version: v0.10
+      package: github.com/jesseduffield/lazydocker
   become: yes
