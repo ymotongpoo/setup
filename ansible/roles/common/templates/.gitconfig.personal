@@ -1,2 +1,19 @@
 [user]
+    name = "Yoshi Yamaguchi"
     email = "145104+ymotongpoo@users.noreply.github.com"
+
+[core]
+    autocrlf = false
+    ignorecase = false
+    quotepath = false
+    editor = 'vim -c "func=utf-8"'
+
+[color]
+    ui = true
+
+[push]
+    default = current
+
+[pull]
+    rebase = false
+    ff = only
