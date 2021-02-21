@@ -1,5 +1,5 @@
 ---
-- hosts: dev
+- hosts: ubuntu2004
   roles:
   - role: ubuntu
   - role: common

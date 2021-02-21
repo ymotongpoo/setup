@@ -1,21 +1,24 @@
 ---
-- name: Prepare target directory for Go
-  ansible.builtin.file:
-    path: /opt/go
-    state: directory
-    mode: '0644'
-  become: yes
-
-- name: Get the status of Go target directory
-  ansible.builtin.stat:
-    path: /opt/go
-  register: go_target_dir
-
 - name: Install Go
-  ansible.builtin.unarchive:
-    src: "https://golang.org/dl/go{{ go_version }}.linux-amd64.tar.gz"
-    dest: /opt/
-    mode: '0755'
-    remote_src: yes
+  import_role:
+    name: fubarhouse.golang
+  vars:
+    go_version: "{{ go_install_version }}"
+    GOPATH: "/home/{{ ansible_env.USER }}/go"
+    GOROOT: "/home/{{ ansible_env.USER }}/.go"
+    GOPROXY: https://proxy.golang.org
+    GO111MODULE: "on"
+    GOOS: linux
+    GOARCH: amd64
+    mode_codebase: 0755
+    go_checksum: "sha256:013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"
+    go_install:
+    - repo: https://github.com/go-delve/delve.git
+      dest: github.com/go-delve/delve
+      version: v1.6.0
+      package: github.com/go-delve/delve/cmd/dlv
+    - repo: https://github.com/gohugoio/hugo.git
+      dest: github.com/gohugoio/hugo
+      version: v0.81.0
+      package: github.com/gohugoio/hugo
   become: yes
-  when: go_target_dir.stat.exists
