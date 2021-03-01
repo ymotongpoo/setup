@@ -1,4 +1,11 @@
 ---
-- name: Run rustup
+- name: Fetch rustup
+  ansible.builtin.uri:
+    url: https://sh.rustup.rs
+    return_content: yes
+  register: rustup_installer
+
+- name: Run rustup installer
   ansible.builtin.shell:
-    cmd: curl https://sh.rustup.rs -sSf | sh -s -- -y
+    cmd: sh -s -- -y
+    stdin: "{{ rustup_installer.content }}"
