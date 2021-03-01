@@ -63,17 +63,13 @@
     owner: "{{ ansible_env.USER }}"
     group: "{{ ansible_env.USER }}"
 
-- name: Download starship install script
-  ansible.builtin.get_url:
+- name: Fetch starship install script
+  ansible.builtin.uri:
     url: https://starship.rs/install.sh
-    dest: ~/starship-install.sh
-    mode: 0755
+    return_content: yes
+  register: starship_installer
 
 - name: Run starship installation
   ansible.builtin.shell:
-    cmd: ~/starship-install.sh --yes
-
-- name: Remove starship install script
-  ansible.builtin.file:
-    path: ~/starship-install.sh
-    state: absent
+    cmd: bash -s -- --yes
+    stdin: "{{ starship_installer.content }}"
