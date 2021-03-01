@@ -5,7 +5,7 @@
     state: directory
     mode: 0644
 
-- name: Get the status of Go target directory
+- name: Get the status of personal target directory
   ansible.builtin.stat:
     path: ~/personal
   register: personal_target_dir
@@ -42,6 +42,12 @@
     key_file: ~/.ssh/github-nopass
     accept_hostkey: yes
 
+- name: Create .config directory
+  ansible.builtin.file:
+    path: ~/.config
+    state: directory
+    mode: 0755
+
 - name: Symbolic links
   ansible.builtin.file:
     src: "{{ item.src }}"
@@ -56,3 +62,18 @@
     mode: 0755
     owner: "{{ ansible_env.USER }}"
     group: "{{ ansible_env.USER }}"
+
+- name: Download starship install script
+  ansible.builtin.get_url:
+    url: https://starship.rs/install.sh
+    dest: ~/starship-install.sh
+    mode: 0755
+
+- name: Run starship installation
+  ansible.builtin.shell:
+    cmd: ~/starship-install.sh --yes
+
+- name: Remove starship install script
+  ansible.builtin.file:
+    path: ~/starship-install.sh
+    state: absent

@@ -1,0 +1,4 @@
+---
+- name: Run rustup
+  ansible.builtin.shell:
+    cmd: curl https://sh.rustup.rs -sSf | sh -s -- -y

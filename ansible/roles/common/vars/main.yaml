@@ -1,8 +1,15 @@
 ---
 # Go version
 go_install_version: 1.16
+goroot: "/home/{{ ansible_env.USER }}/.go"
+gopath: "/home/{{ ansible_env.USER }}/go"
+
+ruby_version: 2.7.2
+rbenv_path: ~/.rbenv/bin/rbenv
 
 symbolic_links:
+- src: ~/.dotfiles/starship.toml
+  dest: ~/.config/starship.toml
 - src: ~/.dotfiles/.zshrc
   dest: ~/.zshrc
 - src: ~/.dotfiles/.zshenv.linux

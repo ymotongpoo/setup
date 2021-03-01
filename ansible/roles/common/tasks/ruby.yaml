@@ -1,0 +1,25 @@
+---
+- name: Install rbenv
+  ansible.builtin.git:
+    repo: https://github.com/rbenv/rbenv.git
+    dest: ~/.rbenv
+
+- name: Install ruby-build
+  ansible.builtin.git:
+    repo: https://github.com/rbenv/ruby-build.git
+    dest: ~/.rbenv/plugins/ruby-build
+
+- name: Install Ruby via rbenv
+  ansible.builtin.shell:
+    cmd: "{{ rbenv_path }} install {{ ruby_version }}"
+
+- name: Relogin to refresh .zshrc setting
+  meta: reset_connection
+
+- name: Rehash rebenv
+  ansible.builtin.shell:
+    cmd: "{{ rbenv_path }} global {{ ruby_version }} && {{ rbenv_path }} rehash"
+
+- name: Install bundler
+  ansible.builtin.shell:
+    cmd: ~/.rbenv/shims/gem install -q bundler

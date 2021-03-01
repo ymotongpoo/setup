@@ -1,0 +1,9 @@
+---
+- name: Download nord-gnome-terminal
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/arcticicestudio/nord-gnome-terminal/develop/src/nord.sh
+    mode: 0755
+
+- name: Install Nord profile to GNOME terminal
+  ansible.builtin.shell:
+    cmd: ./nord.sh

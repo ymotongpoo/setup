@@ -4,25 +4,40 @@
     name: fubarhouse.golang
   vars:
     go_version: "{{ go_install_version }}"
-    GOPATH: "/home/{{ ansible_env.USER }}/go"
-    GOROOT: "/home/{{ ansible_env.USER }}/.go"
+    GOPATH: "{{ goroot }}"
+    GOROOT: "{{ gopath }}"
     GOPROXY: https://proxy.golang.org
     GO111MODULE: "on"
     GOOS: linux
     GOARCH: amd64
     mode_codebase: 0755
     go_checksum: "sha256:013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"
-    go_install:
-    - repo: https://github.com/go-delve/delve.git
-      dest: github.com/go-delve/delve
-      version: v1.6.0
-      package: github.com/go-delve/delve/cmd/dlv
-    - repo: https://github.com/gohugoio/hugo.git
-      dest: github.com/gohugoio/hugo
-      version: v0.81.0
-      package: github.com/gohugoio/hugo
-    - repo: https://github.com/jesseduffield/lazydocker.git
-      dest: github.com/jesseduffield/lazydocker
-      version: v0.10
-      package: github.com/jesseduffield/lazydocker
+    go_get:
+    - name: dlv
+      url: github.com/go-delve/delve/cmd/dlv
+      modules: true
+    - name: hugo
+      url: github.com/gohugoio/hugo
+      modules: true
+    - name: lazydocker
+      url: github.com/jesseduffield/lazydocker
+      modules: true
+  become: yes
+
+- name: Change permission of GOROOT
+  ansible.builtin.file:
+    path: "{{ goroot }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0755
+    recurse: yes
+  become: yes
+
+- name: Change permission of GOPATH
+  ansible.builtin.file:
+    path: "{{ gopath }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: 0755
+    recurse: yes
   become: yes

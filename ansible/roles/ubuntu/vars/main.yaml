@@ -50,6 +50,10 @@ basic_apt_packages:
   state: latest
 - name: build-essential
   state: latest
+- name: libssl-dev
+  state: latest
+- name: zlib1g-dev
+  state: latest
 - name: emacs
   state: latest
 - name: vim
@@ -69,6 +73,20 @@ basic_apt_packages:
 - name: fd-find
   state: latest
 - name: silversearcher-ag
+  state: latest
+- name: sysstat
+  state: latest
+- name: htop
+  state: latest
+- name: atop
+  state: latest
+- name: nethogs
+  state: latest
+- name: vnstat
+  state: latest
+- name: nmon
+  state: latest
+- name: xclip
   state: latest
 - name: google-cloud-sdk
   state: latest

@@ -2,5 +2,7 @@
 - include: base.yaml
 - include: go.yaml
 - include: python.yaml
+- include: ruby.yaml
+- include: rust.yaml
 - include: binary.yaml
 - include: systemd.yaml
