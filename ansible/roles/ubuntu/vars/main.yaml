@@ -54,6 +54,12 @@ basic_apt_packages:
   state: latest
 - name: zlib1g-dev
   state: latest
+- name: libbz2-dev
+  state: latest
+- name: libreadline-dev
+  state: latest
+- name: libffi-dev
+  state: latest
 - name: emacs
   state: latest
 - name: vim
