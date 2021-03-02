@@ -23,6 +23,8 @@
       url: github.com/jesseduffield/lazydocker
       modules: true
   become: yes
+  tags:
+  - go
 
 - name: Change permission of GOROOT
   ansible.builtin.file:
@@ -32,6 +34,8 @@
     mode: 0755
     recurse: yes
   become: yes
+  tags:
+  - go
 
 - name: Change permission of GOPATH
   ansible.builtin.file:
@@ -41,3 +45,5 @@
     mode: 0755
     recurse: yes
   become: yes
+  tags:
+  - go
