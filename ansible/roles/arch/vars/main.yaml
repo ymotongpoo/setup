@@ -24,29 +24,37 @@ arch_packages:
   state: latest
 - name: python3
   state: latest
-- name: python3-pip
-  state: latest
-- name: python3-venv
+- name: python-pip
   state: latest
 - name: tmux
   state: latest
 - name: jq
   state: latest
+- name: fzf
+  state: latest
+- name: fd
+  state: latest
 - name: the_silver_searcher
+  state: latest
+- name: sysstat
+  state: latest
+- name: htop
+  state: latest
+- name: atop
+  state: latest
+- name: nethogs
+  state: latest
+- name: vnstat
+  state: latest
+- name: nmon
+  state: latest
+- name: xclip
+  state: latest
+- name: ctop
+  state: latest
+- name: terraform
   state: latest
 - name: docker
   state: latest
-- name: trizen
-  state: latest
-
-gcloud_packages:
-- name: google-cloud-sdk
-  state: latest
-- name: google-cloud-sdk-app-engine-go
-  state: latest
-- name: google-cloud-sdk-app-engine-python
-  state: latest
-- name: google-cloud-sdk-app-engine-python
-  state: latest
-- name: kubectl
+- name: containerd
   state: latest

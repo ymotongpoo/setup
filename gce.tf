@@ -141,6 +141,16 @@ resource "google_compute_instance" "ubuntu2004" {
         ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
     }
 
+    provisioner "remote-exec" {
+        inline = ["echo hello"]
+        connection {
+            type = "ssh"
+            host = self.network_interface[0].access_config[0].nat_ip
+            user = var.gce_ssh_user
+            private_key = file("~/.ssh/gcp_terraform")
+        }
+    }
+
     provisioner "local-exec" {
         working_dir = "./ansible/"
         command = <<EOL
@@ -150,14 +160,14 @@ resource "google_compute_instance" "ubuntu2004" {
 }
 
 resource "google_compute_instance" "arch_dev" {
-    name = "arch"
+    name = "arch-dev"
     machine_type = "e2-standard-4"
     zone = var.zone
     tags = ["dev-env"]
 
     boot_disk {
         initialize_params {
-            image = "arch/arch-linux-gce"
+            image = "projects/arch-linux-gce/global/images/family/arch"
         }
     }
 
@@ -179,6 +189,16 @@ resource "google_compute_instance" "arch_dev" {
     metadata = {
         block-project-ssh-keys = "true"
         ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
+    }
+
+    provisioner "remote-exec" {
+        inline = ["echo hello"]
+        connection {
+            type = "ssh"
+            host = self.network_interface[0].access_config[0].nat_ip
+            user = var.gce_ssh_user
+            private_key = file("~/.ssh/gcp_terraform")
+        }
     }
 
     provisioner "local-exec" {

@@ -1,4 +1,26 @@
 ---
+- name: Reinstall archilinux-keyring package
+  community.general.pacman:
+    name: archlinux-keyring
+    state: latest
+  become: yes
+
+- name: packman-key refresh
+  ansible.builtin.shell:
+    cmd: pacman-key --refresh-keys
+  become: yes
+
+- name: pacman-key populate
+  ansible.builtin.shell:
+    cmd: pacman-key --populate archlinux
+  become: yes
+
+- name: Update pacman cache
+  community.general.pacman:
+    update_cache: yes
+    upgrade: yes
+  become: yes
+
 - name: Install arch packages
   community.general.pacman:
     name: "{{ item.name }}"
@@ -6,24 +28,15 @@
   with_items: "{{ arch_packages }}"
   become: yes
 
-- name: Create aur_builder user
-  ansible.builtin.user:
-    name: aur_builder
-    create_home: no
-    group: wheel
-  become: yes
-
-- name: Add aur_builder to sudoers
-  ansible.builtin.lineinfile:
-    path: /etc/sudoers.d/11-install-aur_builder
-    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
-    create: yes
-    validate: 'visudo -cf %s'
-  become: yes
-
 - name: Install trizen
-  kewlfft.aur:
+  aur:
     name: trizen
     use: makepkg
     state: latest
-  become: yes
+
+- name: Install AUR packages
+  aur:
+    use: trizen
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ aur_packages }}"

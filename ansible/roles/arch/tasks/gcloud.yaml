@@ -1,0 +1,5 @@
+---
+- name: Install gcloud pacakges
+  ansible.builtin.shell:
+    cmd: "gcloud components install {{ item }}"
+  with_items: "{{ gcloud_components }}"
