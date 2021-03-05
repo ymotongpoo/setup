@@ -67,6 +67,7 @@ resource "google_compute_instance" "debian10" {
 
     boot_disk {
         initialize_params {
+            size = 50
             image = "debian-cloud/debian-10"
         }
     }
@@ -117,6 +118,7 @@ resource "google_compute_instance" "ubuntu2004" {
 
     boot_disk {
         initialize_params {
+            size = 50
             image = "ubuntu-os-cloud/ubuntu-2004-lts"
         }
     }
@@ -167,6 +169,7 @@ resource "google_compute_instance" "arch_dev" {
 
     boot_disk {
         initialize_params {
+            size = 50
             image = "projects/arch-linux-gce/global/images/family/arch"
         }
     }
