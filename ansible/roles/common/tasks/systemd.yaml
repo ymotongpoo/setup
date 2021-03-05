@@ -1,29 +1,20 @@
 ---
 # Docker post-installation process
-- name: Create docker group
-  ansible.builtin.group:
-    name: docker
-    state: present
+- name: Reboot system to enable Docker network interfaces
+  ansible.builtin.reboot:
+    msg: Reboot initialized by Ansible to enable Docker network interfaces
   become: yes
-
-- name: Add user to docker group
-  ansible.builtin.user:
-    name: "{{ lookup('env', 'USER') }}"
-    groups: docker
-    append: yes
-  become: yes
-
-- name: Relogin to the instance
-  meta: reset_connection
 
 - name: Register docker as startup service and run
   ansible.builtin.systemd:
     name: docker
     state: started
     enabled: yes
+  become: yes
 
 - name: Register containerd as startup service and run
   ansible.builtin.systemd:
     name: containerd
     state: started
     enabled: yes
+  become: yes

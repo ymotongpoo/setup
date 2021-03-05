@@ -1,3 +1,2 @@
 ---
 - include: pacman.yaml
-- include: gcloud.yaml

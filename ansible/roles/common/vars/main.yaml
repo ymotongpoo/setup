@@ -1,17 +1,35 @@
 ---
-# Go version
+# Go
 go_install_version: 1.16
 goroot: "/home/{{ ansible_env.USER }}/.go"
 gopath: "/home/{{ ansible_env.USER }}/go"
 
+# Java
 java_version: 15
 openjdk_tarball: https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/download/jdk-15.0.2%2B7/OpenJDK15U-jdk_x64_linux_hotspot_15.0.2_7.tar.gz
 
+# Kotlin
 kotlin_version: 1.4.31
 kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotlin_version }}/kotlin-native-linux-{{ kotlin_version }}.tar.gz"
 
+# Ruby
 ruby_version: 2.7.2
 rbenv_path: ~/.rbenv/bin/rbenv
+
+# gcloud
+gcloud_version: 330.0.0
+gcloud_tarball: "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-{{ gcloud_version }}-linux-x86_64.tar.gz"
+gcloud_dir: ~/.google-cloud-sdk
+gcloud_components:
+- beta
+- alpha
+- gsutil
+- app-engine-go
+- app-engine-python
+- app-engine-python-extras
+- kubectl
+- skaffold
+- kustomize
 
 symbolic_links:
 - src: ~/.dotfiles/starship.toml

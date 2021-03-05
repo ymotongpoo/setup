@@ -1,8 +1,6 @@
 ---
 # PGP keys for external repositories
 pgp_keys:
-- url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-  keyring: /usr/share/keyrings/cloud.google.gpg
 - url: https://download.docker.com/linux/debian/gpg
   keyring:
 - url: https://apt.releases.hashicorp.com/gpg
@@ -10,8 +8,6 @@ pgp_keys:
 
 # apt repositories
 debian_10_apt_repositories:
-- repo: deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
-  state: present
 - repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
   state: present
 - repo: deb [arch=amd64] https://apt.releases.hashicorp.com buster main
@@ -93,16 +89,6 @@ basic_apt_packages:
 - name: nmon
   state: latest
 - name: xclip
-  state: latest
-- name: google-cloud-sdk
-  state: latest
-- name: google-cloud-sdk-app-engine-go
-  state: latest
-- name: google-cloud-sdk-app-engine-python
-  state: latest
-- name: google-cloud-sdk-app-engine-python
-  state: latest
-- name: kubectl
   state: latest
 - name: docker-ce
   state: latest

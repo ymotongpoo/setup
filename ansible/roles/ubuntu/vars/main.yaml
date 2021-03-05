@@ -94,16 +94,6 @@ basic_apt_packages:
   state: latest
 - name: xclip
   state: latest
-- name: google-cloud-sdk
-  state: latest
-- name: google-cloud-sdk-app-engine-go
-  state: latest
-- name: google-cloud-sdk-app-engine-python
-  state: latest
-- name: google-cloud-sdk-app-engine-python
-  state: latest
-- name: kubectl
-  state: latest
 - name: docker-ce
   state: latest
 - name: docker-ce-cli

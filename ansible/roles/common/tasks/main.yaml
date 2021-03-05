@@ -2,6 +2,7 @@
 - include: base.yaml
 - include: go.yaml
 - include: python.yaml
+- include: gcloud.yaml
 - include: jvm.yaml
 - include: ruby.yaml
 - include: rust.yaml

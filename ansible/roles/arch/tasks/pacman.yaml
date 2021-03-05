@@ -34,9 +34,3 @@
     use: makepkg
     state: latest
 
-- name: Install AUR packages
-  aur:
-    use: trizen
-    name: "{{ item.name }}"
-    state: "{{ item.state }}"
-  with_items: "{{ aur_packages }}"
