@@ -16,4 +16,4 @@
 ansible-galaxy collection install google.cloud
 ansible-galaxy collection install community.general
 ansible-galaxy install kewlfft.aur
-ansible-galaxy install fuberhouse.golang
+ansible-galaxy install fubarhouse.golang

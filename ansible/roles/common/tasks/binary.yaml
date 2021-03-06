@@ -4,6 +4,8 @@
     src: "https://github.com/{{ item.repo }}/releases/download/{{ item.version }}/{{ item.asset }}"
     dest: "/home/{{ ansible_user }}/bin"
     remote_src: yes
+    extra_opts:
+    - --strip-components=1
   with_items: "{{ github_binary_releases }}"
 
 - name: Install binary release

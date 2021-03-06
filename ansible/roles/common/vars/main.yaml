@@ -52,3 +52,6 @@ github_binary_releases:
 - repo: github/hub
   version: v2.14.2
   asset: hub-linux-amd64-2.14.2.tgz
+- repo: loadimpact/k6
+  version: v0.30.0
+  asset: k6-v0.30.0-linux64.tar.gz
