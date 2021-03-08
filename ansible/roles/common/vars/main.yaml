@@ -12,6 +12,9 @@ openjdk_tarball: https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/dow
 kotlin_version: 1.4.31
 kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotlin_version }}/kotlin-native-linux-{{ kotlin_version }}.tar.gz"
 
+# Node
+node_version: 14.16.0
+
 # Ruby
 ruby_version: 2.7.2
 rbenv_path: ~/.rbenv/bin/rbenv
