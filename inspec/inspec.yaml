@@ -1,0 +1,10 @@
+---
+name: inspec
+title: Yoshi's Development Environment
+maintainer: Yoshi Yamaguchi
+copyright: Yoshi Yamaguchi
+license: Apache-2.0
+summary: Test suite for Yoshi's development environment
+version: 0.1.0
+supports:
+  - os-family: linux
