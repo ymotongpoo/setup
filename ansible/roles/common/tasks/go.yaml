@@ -16,9 +16,6 @@
     - name: dlv
       url: github.com/go-delve/delve/cmd/dlv
       modules: true
-    - name: hugo
-      url: github.com/gohugoio/hugo
-      modules: true
     - name: lazydocker
       url: github.com/jesseduffield/lazydocker
       modules: true

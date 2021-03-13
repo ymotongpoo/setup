@@ -58,3 +58,6 @@ github_binary_releases:
 - repo: loadimpact/k6
   version: v0.30.0
   asset: k6-v0.30.0-linux64.tar.gz
+- repo: gohugoio/hugo
+  version: v0.81.0
+  asset: hugo_0.81.0_Linux-64bit.tar.gz
