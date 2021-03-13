@@ -13,13 +13,16 @@
 # limitations under the License.
 
 control 'binary-installation' do
-    describe file('/home/demo/bin/peco') do
-        it { should exist }
-        its('mode') { should cmp '0755' }
-    end
+    impact 0.5
+    title 'Binary files installed via tarball'
+    desc 'The binaries should be installed under user bin directory'
 
-    describe file('/home/demo/bin/vgrep') do
-        it { should exist }
-        its('mode') { should cmp '0755' }
+    binaries = ['peco', 'hub', 'k6', 'hugo', 'vgrep']
+
+    binaries.each do |binary| do
+        describe file('/home/demo/bin/'.concat(binary)) do
+            it { should exist }
+            its('mode') { should cmp '0755' }
+        end
     end
 end
