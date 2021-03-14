@@ -58,3 +58,5 @@ arch_packages:
   state: latest
 - name: containerd
   state: latest
+- name: hub
+  state: latest

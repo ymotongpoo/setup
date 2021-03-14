@@ -48,16 +48,17 @@ symbolic_links:
 - src: ~/.dotfiles/.Xresources
   dest: ~/.Xresources
 
-github_binary_releases:
+github_tarball_releases:
 - repo: peco/peco
   version: v0.5.8
   asset: peco_linux_amd64.tar.gz
-- repo: github/hub
-  version: v2.14.2
-  asset: hub-linux-amd64-2.14.2.tgz
+  extra_opts: ["--strip-components=1"]
 - repo: loadimpact/k6
   version: v0.30.0
   asset: k6-v0.30.0-linux64.tar.gz
+  extra_opts: ["--strip-components=1"]
 - repo: gohugoio/hugo
   version: v0.81.0
   asset: hugo_0.81.0_Linux-64bit.tar.gz
+  extra_opts: []
+
