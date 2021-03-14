@@ -1,3 +1,4 @@
+#!/bin/bash -e
 # Copyright 2021 Yoshi Yamaguchi
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,23 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-control 'golang-installation' do
-    describe file('/home/demo/.go') do
-        it { should exist }
-        its('mode') { should cmp '0755' }
-        its('owner') { should cmp 'demo' }
-    end
+target=$(gcloud compute instances list \
+  --filter="name=arch-dev" \
+  --format="value(networkInterfaces[0].accessConfigs[0].natIP)")
 
-    describe file('/home/demo/go') do
-        it { should exist }
-        its('mode') { should cmp '0755' }
-        its('owner') { should cmp 'demo' }
-    end
-
-    describe file('/home/demo/.go/bin/go') do
-        it { should exist }
-        its('mode') { should cmp '0755' }
-        its('owner') { should cmp 'demo' }
-    end
-end
-
+rbenv exec inspec exec dev-env -t ssh://demo@$target -i ~/.ssh/gcp_terraform

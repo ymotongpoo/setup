@@ -12,6 +12,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+title "common control"
+
+control 'golang-installation' do
+    impact 1.0
+    title 'Go development environment'
+    desc 'Go distribution should be installed'
+
+    describe file('/home/demo/.go') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+        its('owner') { should cmp 'demo' }
+    end
+
+    describe file('/home/demo/go') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+        its('owner') { should cmp 'demo' }
+    end
+
+    describe file('/home/demo/.go/bin/go') do
+        it { should exist }
+        its('mode') { should cmp '0755' }
+        its('owner') { should cmp 'demo' }
+    end
+end
+
 control 'binary-installation' do
     impact 0.5
     title 'Binary files installed via tarball'
@@ -19,10 +47,12 @@ control 'binary-installation' do
 
     binaries = ['peco', 'hub', 'k6', 'hugo', 'vgrep']
 
-    binaries.each do |binary| do
+    binaries.each do |binary|
         describe file('/home/demo/bin/'.concat(binary)) do
             it { should exist }
             its('mode') { should cmp '0755' }
         end
     end
 end
+
+
