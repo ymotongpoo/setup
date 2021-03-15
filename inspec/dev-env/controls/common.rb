@@ -102,8 +102,6 @@ control 'gcloud-installation' do
     title 'gcloud installation'
     desc 'gcloud command should be installed and properly configured'
 
-
-
     describe file('/home/demo/.google-cloud-sdk') do
         it { should exist }
         it { should be_directory }
