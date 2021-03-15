@@ -14,9 +14,10 @@
 
 title "common control"
 
-control 'common-configuration' do
+control 'base-configuration' do
     impact 1.0
     title 'Personal directory settings'
+    desc 'Fundamental configurations for core development workspaces'
 
     items = [
         { path: '/home/demo/personal', mode: '0644', isdir: true },
@@ -82,6 +83,7 @@ end
 control 'python-installation' do
     impact 1.0
     title 'Python development environment'
+    desc 'Python development environment should be configured as venv'
 
     describe file('/home/demo/python') do
         it { should exist }

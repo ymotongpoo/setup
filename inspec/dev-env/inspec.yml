@@ -7,3 +7,4 @@ summary: Check all configs and files are set
 version: 0.1.0
 supports:
   platform: os
+  platform-family: linux

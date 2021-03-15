@@ -1,3 +1,7 @@
+# For Terraform
 .terraform*
 terraform.tfstate*
 *.out
+
+# For inspec
+inspec.lock
