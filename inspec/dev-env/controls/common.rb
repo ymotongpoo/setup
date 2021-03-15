@@ -92,9 +92,154 @@ control 'python-installation' do
     end
 
     describe command('/home/demo/python/misc/bin/python -V') do
-        its('stdout') { should match (/Python 3.[1-9\.]+/) }
+        its('stdout') { should match (/Python 3.[0-9\.]+/) }
     end
 end
+
+
+control 'gcloud-installation' do
+    impact 1.0
+    title 'gcloud installation'
+    desc 'gcloud command should be installed and properly configured'
+
+
+
+    describe file('/home/demo/.google-cloud-sdk') do
+        it { should exist }
+        it { should be_directory }
+    end
+
+    describe file('/home/demo/.google-cloud-sdk/bin/gcloud') do
+        it { should exist }
+        its('mode') { should cmp '0755' }
+        its('owner') { should eq 'demo' }
+    end
+
+    gcloud_version_output = /
+    Google\ Cloud\ SDK\ [0-9\.]+\n
+    alpha\ [0-9\.]+\n
+    app-engine-go\ [0-9\.]+\n
+    app-engine-python\ [0-9\.]+\n
+    app-engine-python-extras\ [0-9\.]+\n
+    beta\ [0-9\.]+\n
+    bq\ [0-9\.]+\n
+    cloud-datastore-emulator\ [0-9\.]+\n
+    core\ [0-9\.]+\n
+    gsutil\ [0-9\.]+\n
+    kubectl\ [0-9\.]+\n
+    kustomize\ [0-9\.]+\n
+    skaffold\ [0-9\.]+
+    /x
+    describe command('/home/demo/.google-cloud-sdk/bin/gcloud version') do
+        its('stdout') { should match (gcloud_version_output) }
+    end
+end
+
+
+control 'node-intallation' do
+    impact 0.8
+    title 'Node.js installation'
+    desc 'Node.js and its relevant packages should be installed'
+
+    describe file('/home/demo/.nodenv') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+        its('owner') { should eq 'demo' }
+    end
+
+    describe file('/home/demo/.nodenv/plugins/node-build') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+        its('owner') { should eq 'demo' }
+    end
+
+    describe command('/home/demo/.nodenv/bin/nodenv version') do
+        its('stdout') { should match (/[0-9\.]+ \(set by \/home\/demo\/\.nodenv\/version\)/) }
+    end
+
+    describe command('/home/demo/.nodenv/shims/node -v') do
+        its('stdout') { should match (/v[0-9\.]+/) }
+    end
+end
+
+control 'jvm-installation' do
+    impact 0.8
+    title 'JVM installation'
+    desc 'Java Virtiual Machine and JVM languagees should be installed'
+
+    java_version = '15'
+    describe file(format('/opt/openjdk/%s', java_version)) do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+    end
+
+    describe command(format('/opt/openjdk/%s/bin/java --version', java_version)) do
+        its('stdout') { should match (/openjdk [0-9\.]+ [0-9\-]+/) }
+    end
+
+    describe file('/opt/kotlin') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+    end
+
+    describe command('/opt/kotlin/bin/kotlinc -version') do
+        its('stdout') { should match (/Kotlin\/Native: [0-9\.]+/) }
+    end
+end
+
+control 'ruby-installation' do
+    impact 0.5
+    title 'Ruby installation'
+    desc 'Ruby and its relevant packages should be installed'
+
+    describe file('/home/demo/.rbenv') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+        its('owner') { should eq 'demo' }
+    end
+
+    describe file('/home/demo/.rbenv/plugins/ruby-build') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+        its('owner') { should eq 'demo' }
+    end
+
+    describe command('/home/demo/.rbenv/bin/rbenv version') do
+        its('stdout') { should match (/[0-9\.]+ \(set by \/home\/demo\/\.rbenv\/version\)/) }
+    end
+
+    describe command('/home/demo/.rbenv/shims/ruby -v') do
+        its('stdout') { should match (/ruby [0-9\.p]+/) }
+    end
+end
+
+control 'rust-installation' do
+    impact 0.5
+    title 'Rust installation'
+    desc 'Rust development environment should be set'
+
+    describe file('/home/demo/.cargo') do
+        it { should exist }
+        it { should be_directory }
+        its('mode') { should cmp '0755' }
+        its('owner') { should eq 'demo' }
+    end
+
+    describe command('/home/demo/.cargo/bin/rustc -V') do
+        its('stdout') { should match (/rustc [0-9\.]+ \(\w+ [0-9\-]+\)/) }
+    end
+
+    describe command('/home/demo/.cargo/bin/rustup -V') do
+        its('stdout') { should match (/rustup [0-9\.]+ \(\w+ [0-9\-]+\)/) }
+    end
+end
+
 
 control 'binary-installation' do
     impact 0.5
@@ -111,4 +256,20 @@ control 'binary-installation' do
     end
 end
 
+control 'systemd-configuration' do
+    impact 1.0
+    title 'Systemd configurations'
+    desc 'Systemd service should be configured'
 
+    describe systemd_service('docker') do
+        it { should be_installed }
+        it { should be_enabled }
+        it { should be_running }
+    end
+
+    describe systemd_service('containerd') do
+        it { should be_installed }
+        it { should be_enabled }
+        it { should be_running }
+    end
+end
