@@ -1,0 +1,10 @@
+name: common
+title: Yoshi's development environment
+maintainer: Yoshi Yamaguchi
+copyright: Yoshi Yamaguchi
+license: Apache-2.0
+summary: Check all configs and files are set
+version: 0.1.0
+supports:
+  platform: os
+  platform-family: linux

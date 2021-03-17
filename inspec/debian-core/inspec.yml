@@ -1,0 +1,12 @@
+name: debian-core
+title: Yoshi's development environment
+maintainer: Yoshi Yamaguchi
+copyright: Yoshi Yamaguchi
+license: Apache-2.0
+summary: Check all debian configs
+version: 0.1.0
+supports:
+  platform: os
+  platform-family: linux
+  platform-name: debian
+  release: 10.8
