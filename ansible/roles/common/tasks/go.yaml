@@ -11,7 +11,7 @@
     GOOS: linux
     GOARCH: amd64
     mode_codebase: 0755
-    go_checksum: "sha256:013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"
+    go_checksum: "{{ go_tarball_checksum }}"
     go_get:
     - name: dlv
       url: github.com/go-delve/delve/cmd/dlv
