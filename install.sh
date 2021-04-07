@@ -17,3 +17,8 @@ ansible-galaxy collection install google.cloud
 ansible-galaxy collection install community.general
 ansible-galaxy install kewlfft.aur
 ansible-galaxy install fubarhouse.golang
+
+pip install -r requirements.txt
+
+sudo apt install \
+  sshpass
