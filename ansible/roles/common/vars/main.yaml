@@ -1,6 +1,6 @@
 ---
 # Go
-go_install_version: 1.16.2
+go_install_version: 1.16.3
 go_tarball_checksum: "sha256:542e936b19542e62679766194364f45141fde55169db2d8d01046555ca9eb4b8"
 goroot: "/home/{{ ansible_env.USER }}/.go"
 gopath: "/home/{{ ansible_env.USER }}/go"
@@ -10,18 +10,18 @@ java_version: 15
 openjdk_tarball: https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/download/jdk-15.0.2%2B7/OpenJDK15U-jdk_x64_linux_hotspot_15.0.2_7.tar.gz
 
 # Kotlin
-kotlin_version: 1.4.31
+kotlin_version: 1.4.32
 kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotlin_version }}/kotlin-native-linux-{{ kotlin_version }}.tar.gz"
 
 # Node
-node_version: 14.16.0
+node_version: 14.16.1
 
 # Ruby
-ruby_version: 2.7.2
+ruby_version: 2.7.3
 rbenv_path: ~/.rbenv/bin/rbenv
 
 # gcloud
-gcloud_version: 332.0.0
+gcloud_version: 336.0.0
 gcloud_tarball: "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-{{ gcloud_version }}-linux-x86_64.tar.gz"
 gcloud_dir: ~/.google-cloud-sdk
 gcloud_components:
@@ -62,4 +62,3 @@ github_tarball_releases:
   version: v0.81.0
   asset: hugo_0.81.0_Linux-64bit.tar.gz
   extra_opts: []
-
