@@ -54,6 +54,8 @@ arch_packages:
   state: latest
 - name: terraform
   state: latest
+- name: packer
+  state: latest
 - name: docker
   state: latest
 - name: containerd

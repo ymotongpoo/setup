@@ -104,5 +104,7 @@ basic_apt_packages:
   state: latest
 - name: terraform
   state: latest
+- name: packer
+  state: latest
 - name: hub
   state: latest
