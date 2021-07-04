@@ -2,7 +2,7 @@
 # This inventory is using gcp_compute plugin. Install the plugin in advance of the execution.
 # $ ansible-galaxy collection install google.cloud
 # https://docs.ansible.com/ansible/latest/collections/google/cloud/gcp_compute_inventory.html
-plugin: google.cloud.gcp_compute
+plugin: gcp_compute
 zones: # populate inventory with instances in these regions
   - asia-northeast1-b
   - asia-northeast1-a

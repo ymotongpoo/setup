@@ -21,13 +21,13 @@ variable "project_id" {
 variable "region" {
     type = string
     description = "Google Compute Engine region"
-    default = "asia-northeast2"
+    default = "asia-northeast1"
 }
 
 variable "zone" {
     type = string
     description = "Google Compute Engine zone"
-    default = "asia-northeast2-a"
+    default = "asia-northeast1-a"
 }
 
 provider "google" {

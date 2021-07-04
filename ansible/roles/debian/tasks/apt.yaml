@@ -9,7 +9,7 @@
 - name: Install external apt repository PGP keys
   ansible.builtin.apt_key:
     url: "{{ item.url }}"
-    keyring: "{{ item.keyring }}"
+    state: "{{ item.state }}"
   with_items: "{{ pgp_keys }}"
   become: yes
 

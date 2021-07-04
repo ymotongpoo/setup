@@ -2,9 +2,9 @@
 # PGP keys for external repositories
 pgp_keys:
 - url: https://download.docker.com/linux/debian/gpg
-  keyring:
+  state: present
 - url: https://apt.releases.hashicorp.com/gpg
-  keyring:
+  state: present
 
 # apt repositories
 debian_10_apt_repositories:
