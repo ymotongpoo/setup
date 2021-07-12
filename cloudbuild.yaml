@@ -1,0 +1,32 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud-slim'
+  entrypoint: 'bash'
+  args: ['shellscript/delete_template_instances.bash']
+  env:
+  - 'ZONE=${_ZONE}'
+
+- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
+  id: 'terraform_init_debian10'
+  args:
+  - init
+
+- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
+  id: 'terraform_plan_debian10'
+  args:
+  - plan
+  - -target=google_compute_instances.debian10
+  waitFor:
+  - 'terraform_init_debian10'
+
+- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
+  id: 'terraform_apply_debian10'
+  args:
+  - apply
+  - -auto-approve
+  waitFor:
+  - 'terraform_plan_debian10'
+
+substitutions:
+  _ZONE: asia-northeast1-a
+
+

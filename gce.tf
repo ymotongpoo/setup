@@ -12,6 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+terraform {
+    required_version = ">=1.0.0"
+
+    required_providers {
+        google = ">= 3.56.0"
+    }
+}
+
 variable "project_id" {
     type = string
     description = "Google Cloud Platform project ID"
@@ -41,11 +49,26 @@ variable "gce_ssh_user" {
     description = "username for SSH"
     default = "demo"
 }
+
 variable "gce_ssh_pub_key_file" {
     type = string
     description = "path the public key file"
     default = "~/.ssh/gcp_terraform.pub"
 }
+
+
+data "google_secret_manager_secret_version" "terraform_ssh_private_key" {
+    provider = google
+    secret = "terraform-ssh-private-key"
+    version = "1"
+}
+
+data "google_secret_manager_secret_version" "terraform_ssh_pub_key" {
+    provider = google
+    secret = "terraform-ssh-pub-key"
+    version = "1"
+}
+
 resource "google_compute_firewall" "dev_http" {
     name = "dev-http"
     network = "default"
@@ -64,6 +87,9 @@ resource "google_compute_instance" "debian10" {
     machine_type = "e2-standard-4"
     zone = var.zone
     tags = ["dev-env"]
+    labels = {
+        "process" = "template"
+    }
 
     boot_disk {
         initialize_params {
@@ -89,7 +115,7 @@ resource "google_compute_instance" "debian10" {
 
     metadata = {
         block-project-ssh-keys = "true"
-        ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
+        ssh-keys = "${var.gce_ssh_user}:${data.google_secret_manager_secret_version.terraform_ssh_pub_key.secret_data}"
     }
 
     provisioner "remote-exec" {
@@ -98,7 +124,7 @@ resource "google_compute_instance" "debian10" {
             type = "ssh"
             host = self.network_interface[0].access_config[0].nat_ip
             user = var.gce_ssh_user
-            private_key = file("~/.ssh/gcp_terraform")
+            private_key = data.google_secret_manager_secret_version.terraform_ssh_private_key.secret_data
         }
     }
 
@@ -140,7 +166,7 @@ resource "google_compute_instance" "ubuntu2004" {
 
     metadata = {
         block-project-ssh-keys = "true"
-        ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
+        ssh-keys = "${var.gce_ssh_user}:${data.google_secret_manager_secret_version.terraform_ssh_pub_key.secret_data}"
     }
 
     provisioner "remote-exec" {
@@ -149,7 +175,7 @@ resource "google_compute_instance" "ubuntu2004" {
             type = "ssh"
             host = self.network_interface[0].access_config[0].nat_ip
             user = var.gce_ssh_user
-            private_key = file("~/.ssh/gcp_terraform")
+            private_key = data.google_secret_manager_secret_version.terraform_ssh_private_key.secret_data
         }
     }
 
@@ -191,7 +217,7 @@ resource "google_compute_instance" "arch_dev" {
 
     metadata = {
         block-project-ssh-keys = "true"
-        ssh-keys = "${var.gce_ssh_user}:${file(var.gce_ssh_pub_key_file)}"
+        ssh-keys = "${var.gce_ssh_user}:${data.google_secret_manager_secret_version.terraform_ssh_pub_key.secret_data}"
     }
 
     provisioner "remote-exec" {
@@ -200,7 +226,7 @@ resource "google_compute_instance" "arch_dev" {
             type = "ssh"
             host = self.network_interface[0].access_config[0].nat_ip
             user = var.gce_ssh_user
-            private_key = file("~/.ssh/gcp_terraform")
+            private_key = data.google_secret_manager_secret_version.terraform_ssh_private_key.secret_data
         }
     }
 
