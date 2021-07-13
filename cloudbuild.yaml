@@ -5,6 +5,19 @@ steps:
   env:
   - 'ZONE=${_ZONE}'
 
+- name: 'gcr.io/cloud-builders/gcloud-slim'
+  entrypoint: 'bash'
+  args: ['shellscript/fetch_service_account_file.bash']
+
+- name: 'gcr.io/cloud-builders/gcloud-slim'
+  entrypoint: 'bash'
+  args: ['shellscript/fetch_ssh_private_key.bash']
+
+- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
+  id: 'ansible-setup'
+  entrypoint: '/bin/bash'
+  args: ['shellscript/setup-ansible.bash']
+
 - name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
   id: 'terraform_init_debian10'
   args:
@@ -28,5 +41,3 @@ steps:
 
 substitutions:
   _ZONE: asia-northeast1-a
-
-

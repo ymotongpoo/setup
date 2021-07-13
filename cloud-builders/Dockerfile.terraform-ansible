@@ -26,8 +26,6 @@ RUN wget https://bootstrap.pypa.io/get-pip.py -O get-pip.py \
     && python3 get-pip.py && rm get-pip.py
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
-RUN ansible-galaxy collection install google.cloud community.general
-RUN ansible-galaxy install kewlfft.aur fubarhouse.golang
 COPY --from=fetcher /download/terraform /usr/local/bin/terraform
 RUN chmod +x /usr/local/bin/terraform
 COPY terraform.bash /usr/local/bin/terraform.bash

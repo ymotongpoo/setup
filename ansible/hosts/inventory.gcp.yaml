@@ -10,7 +10,7 @@ zones: # populate inventory with instances in these regions
   - asia-northeast2-a
   - asia-east1-b
 projects: development-215403
-service_account_file: ~/.credentials/ansible-service-account.json
+service_account_file: /workspace/ansible-service-account.json
 auth_kind: serviceaccount
 scopes:
  - 'https://www.googleapis.com/auth/compute'

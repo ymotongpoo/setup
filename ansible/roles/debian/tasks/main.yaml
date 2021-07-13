@@ -1,8 +1,2 @@
 ---
-- name: Change default shell
-  ansible.builtin.user:
-    name: demo
-    shell: /usr/bin/zsh
-  become: yes
-
 - include: apt.yaml

@@ -1,5 +1,9 @@
 ---
-- hosts: ubuntu2004
+- hosts: ubuntu
+  vars:
+  - ansible_user: demo
+  - ansible_ssh_private_key_file: /workspace/ssh_private_key
+
   roles:
   - role: ubuntu
   - role: common
