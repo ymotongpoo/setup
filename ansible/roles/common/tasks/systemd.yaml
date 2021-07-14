@@ -1,9 +1,9 @@
 ---
 # Docker post-installation process
-- name: Reboot system to enable Docker network interfaces
-  ansible.builtin.reboot:
-    msg: Reboot initialized by Ansible to enable Docker network interfaces
-  become: yes
+#- name: Reboot system to enable Docker network interfaces
+#  ansible.builtin.reboot:
+#    msg: Reboot initialized by Ansible to enable Docker network interfaces
+#  become: yes
 
 - name: Register docker as startup service and run
   ansible.builtin.systemd:

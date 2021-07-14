@@ -1,15 +1,16 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud-slim'
+- name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: ['shellscript/delete_template_instances.bash']
   env:
   - 'ZONE=${_ZONE}'
+  timeout: 120s
 
-- name: 'gcr.io/cloud-builders/gcloud-slim'
+- name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: ['shellscript/fetch_service_account_file.bash']
 
-- name: 'gcr.io/cloud-builders/gcloud-slim'
+- name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: 'bash'
   args: ['shellscript/fetch_ssh_private_key.bash']
 
@@ -19,25 +20,51 @@ steps:
   args: ['shellscript/setup-ansible.bash']
 
 - name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
-  id: 'terraform_init_debian10'
+  id: 'terraform_init'
   args:
   - init
+  timeout: 10s
 
 - name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
-  id: 'terraform_plan_debian10'
+  id: 'terraform_plan'
   args:
   - plan
-  - -target=google_compute_instances.debian10
+  - -var=distribution=${_DISTRIBUTION}
   waitFor:
-  - 'terraform_init_debian10'
+  - 'terraform_init'
+  timeout: 10s
 
 - name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
-  id: 'terraform_apply_debian10'
+  id: 'terraform_apply'
   args:
   - apply
   - -auto-approve
   waitFor:
-  - 'terraform_plan_debian10'
+  - 'terraform_plan'
+  timeout: 2400s
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'create-machine-image'
+  entrypoint: 'bash'
+  args: ['shellscript/create_image_from_instance.bash']
+  env:
+  - DISTRIBUTION=${_DISTRIBUTION}
+  - REVISION=${_REVISION}
+  - ZONE=${_ZONE}
+  waitFor:
+  - 'terraform_apply'
+  timeout: 600s
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: 'delete-running-instance'
+  entrypoint: 'bash'
+  args: ['shellscript/delete_template_instances_and_old_machine_images.bash']
+  env:
+  - ZONE=${_ZONE}
 
 substitutions:
   _ZONE: asia-northeast1-a
+  _DISTRIBUTION: debian
+  _REVISION: ${SHORT_SHA}
+
+timeout: 5400s

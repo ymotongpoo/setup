@@ -91,8 +91,8 @@ resource "google_compute_firewall" "dev_http" {
     target_tags = ["tracability-sample"]
 }
 
-resource "google_compute_instance" "dev-instance" {
-    name = "${var.distribution}"
+resource "google_compute_instance" "template-instance" {
+    name = "${var.distribution}-template"
     machine_type = "e2-standard-4"
     zone = var.zone
     tags = ["dev-env"]
