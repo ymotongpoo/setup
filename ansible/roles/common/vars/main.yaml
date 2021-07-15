@@ -61,7 +61,7 @@ github_tarball_releases:
   extra_opts: ["--strip-components=1"]
 - repo: grafana/k6
   version: v0.33.0
-  asset: k6-v0.33.0-linux64.tar.gz
+  asset: k6-v0.33.0-linux-amd64.tar.gz
   extra_opts: ["--strip-components=1"]
 - repo: gohugoio/hugo
   version: v0.85.0
