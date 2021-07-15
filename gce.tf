@@ -126,21 +126,4 @@ resource "google_compute_instance" "template-instance" {
         block-project-ssh-keys = "true"
         ssh-keys = "${var.gce_ssh_user}:${data.google_secret_manager_secret_version.terraform_ssh_pub_key.secret_data}"
     }
-
-    provisioner "remote-exec" {
-        inline = ["echo hello"]
-        connection {
-            type = "ssh"
-            host = self.network_interface[0].access_config[0].nat_ip
-            user = var.gce_ssh_user
-            private_key = data.google_secret_manager_secret_version.terraform_ssh_private_key.secret_data
-        }
-    }
-
-    provisioner "local-exec" {
-        working_dir = "./ansible/"
-        command = <<EOL
-        ANSIBLE_HOST_KEY_CHEKING=False ansible-playbook -i hosts/inventory.gcp.yaml ${var.distribution}.yaml
-        EOL
-    }
 }

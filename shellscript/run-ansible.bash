@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Copyright 2021 Yoshi Yamaguchi
 #
@@ -19,3 +19,5 @@ set -ex
 ansible-galaxy collection install google.cloud
 ansible-galaxy role install kewlfft.aur
 ansible-galaxy role install fubarhouse.golang
+
+ansible-playbook -i ansible/hosts/inventory.gcp.yaml ansible/debian.yaml

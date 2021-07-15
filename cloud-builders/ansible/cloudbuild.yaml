@@ -1,0 +1,19 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'build_docker_image_with_ansible'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/ansible', '-f', 'Dockerfile', '.']
+
+- name: 'gcr.io/${PROJECT_ID}/ansible'
+  id: 'sanity_check'
+  args: ['--version']
+
+- name: 'gcr.io/${PROJECT_ID}/ansible'
+  id: 'ansible_command_check'
+  entrypoint: '/usr/local/bin/ansible'
+  args: ['all', '-i', 'localhost,', '-c', 'local', '-e', 'ansible_python_interpreter=python3.9', '-m', 'setup', '-a', 'filter=ansible_hostname']
+
+images:
+- 'gcr.io/${PROJECT_ID}/ansible'
+
+timeout: 1200s
+tags: ['custom-cloud-builders']

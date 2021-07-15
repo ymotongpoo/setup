@@ -12,22 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM python:3.9-slim-buster as fetcher
-ENV TERRAFORM_VER="1.0.2"
-WORKDIR /download
-RUN apt-get update && apt-get install -y wget unzip
-RUN wget -q -O terraform.zip "https://releases.hashicorp.com/terraform/1.0.2/terraform_${TERRAFORM_VER}_linux_amd64.zip" \
-    && unzip terraform.zip \
-    && rm terraform.zip
-
 FROM python:3.9-slim-buster
-RUN apt-get update && apt-get install -y wget unzip
+ENV debian_packages \
+  wget \
+  unzip \
+  openssh-client
+
+ENV ansible_requirements \
+  ansible>=4.2.0 \
+  requests \
+  google-auth
+
+RUN apt-get update && apt-get install -y ${debian_packages}
 RUN wget https://bootstrap.pypa.io/get-pip.py -O get-pip.py \
     && python3 get-pip.py && rm get-pip.py
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
-COPY --from=fetcher /download/terraform /usr/local/bin/terraform
-RUN chmod +x /usr/local/bin/terraform
-COPY terraform.bash /usr/local/bin/terraform.bash
-RUN chmod +x /usr/local/bin/terraform.bash
-ENTRYPOINT ["/usr/local/bin/terraform.bash"]
+RUN pip install ${ansible_requirements}
+ENTRYPOINT ["/usr/local/bin/ansible-playbook"]

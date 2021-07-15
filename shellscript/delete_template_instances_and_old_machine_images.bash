@@ -15,7 +15,10 @@
 
 set -ex
 
-instances=$( gcloud compute instances list --filter="labels.process=template" --format="value(name)" )
+instances=$( gcloud compute instances list \
+  --filter="labels.process=template" \
+  --format="value(name)" \
+  --zones="${ZONE}" )
 
 if [ -n "$instances" ]; then
     for instance in ${instances};do

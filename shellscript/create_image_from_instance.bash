@@ -16,6 +16,16 @@
 
 set -ex
 
-gcloud beta compute machine-images create ${DISTRIBUTION}-yoshifumi-image-${REVISION} \
+machine_image_name="${DISTRIBUTION}-yoshifumi-image-${REVISION}"
+
+exists=$(gcloud beta compute machine-images list \
+  --filter="name=${machine_image_name}" \
+  --format="value(name)" )
+
+if [ -n "${exists}" ]; then
+    gcloud beta compute machine-images delete ${machine_image_name} --quiet
+fi
+
+gcloud beta compute machine-images create ${machine_image_name} \
   --source-instance ${DISTRIBUTION}-template \
   --source-instance-zone ${ZONE}

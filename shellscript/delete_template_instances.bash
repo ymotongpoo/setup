@@ -15,7 +15,10 @@
 
 set -ex
 
-instances=$( gcloud compute instances list --filter="labels.process=template" --format="value(name)" )
+instances=$( gcloud compute instances list \
+  --filter="labels.process=template" \
+  --format="value(name)" \
+  --zones="${ZONE}" )
 
 if [ -n "$instances" ]; then
     for instance in ${instances};do
@@ -23,8 +26,9 @@ if [ -n "$instances" ]; then
     done
 fi
 
-
-firewalls=$( gcloud compute firewall-rules list --filter="name=dev-http" --format="value(name)" )
+firewalls=$( gcloud compute firewall-rules list \
+  --filter="name=dev-http" \
+  --format="value(name)" )
 
 if [ -n "$firewalls" ]; then
     for firewall in ${firewalls};do

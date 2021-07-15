@@ -19,3 +19,6 @@ set -ex
 gcloud secrets versions access 1 --secret=terraform-ssh-private-key > /workspace/ssh_private_key
 
 gcloud secrets versions access 1 --secret=ansible-github-nopass > /workspace/github-nopass
+
+chmod 600 /workspace/ssh_private_key
+chmod 600 /workspace/github-nopass

@@ -14,34 +14,37 @@ steps:
   entrypoint: 'bash'
   args: ['shellscript/fetch_ssh_private_key.bash']
 
-- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
-  id: 'ansible-setup'
-  entrypoint: '/bin/bash'
-  args: ['shellscript/setup-ansible.bash']
-
-- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
-  id: 'terraform_init'
+- name: 'hashicorp/terraform'
+  id: 'terraform-init'
   args:
   - init
   timeout: 10s
 
-- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
-  id: 'terraform_plan'
+- name: 'hashicorp/terraform'
+  id: 'terraform-plan'
   args:
   - plan
   - -var=distribution=${_DISTRIBUTION}
   waitFor:
-  - 'terraform_init'
+  - 'terraform-init'
   timeout: 10s
 
-- name: 'asia-east1-docker.pkg.dev/${PROJECT_ID}/yoshifumi-images/terraform-ansible:latest'
-  id: 'terraform_apply'
+- name: 'hashicorp/terraform'
+  id: 'terraform-apply'
   args:
   - apply
   - -auto-approve
   waitFor:
-  - 'terraform_plan'
-  timeout: 2400s
+  - 'terraform-plan'
+  timeout: 120s
+
+- name: 'gcr.io/${PROJECT_ID}/ansible'
+  id: 'ansible-execution'
+  entrypoint: '/bin/bash'
+  args: ['shellscript/run-ansible.bash']
+  waitFor:
+  - 'terraform-apply'
+  timeout: 3600s
 
 - name: 'gcr.io/cloud-builders/gcloud'
   id: 'create-machine-image'
@@ -52,15 +55,18 @@ steps:
   - REVISION=${_REVISION}
   - ZONE=${_ZONE}
   waitFor:
-  - 'terraform_apply'
+  - 'ansible-execution'
   timeout: 600s
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  id: 'delete-running-instance'
+  id: 'delete-running-tempalte-instance'
   entrypoint: 'bash'
   args: ['shellscript/delete_template_instances_and_old_machine_images.bash']
   env:
   - ZONE=${_ZONE}
+  waitFor:
+  - 'create-machine-image'
+  timeout: 120s
 
 substitutions:
   _ZONE: asia-northeast1-a

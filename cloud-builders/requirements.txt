@@ -1,5 +1,0 @@
-ansible>=4.2.0
-requests
-google-auth
-molecule
-paramiko
