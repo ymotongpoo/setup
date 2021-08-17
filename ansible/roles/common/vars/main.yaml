@@ -1,8 +1,8 @@
 ---
 # Go
 # https://golang.org/dl/
-go_install_version: 1.16.6
-go_tarball_checksum: "sha256:be333ef18b3016e9d7cb7b1ff1fdb0cac800ca0be4cf2290fe613b3d069dfe0d"
+go_install_version: 1.17
+go_tarball_checksum: "sha256:6bf89fc4f5ad763871cf7eac80a2d594492de7a818303283f1366a7f6a30372d"
 goroot: "/home/{{ ansible_env.USER }}/.go"
 gopath: "/home/{{ ansible_env.USER }}/go"
 
@@ -17,7 +17,7 @@ kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotli
 
 # Node
 # https://nodejs.org/en/download/
-node_version: 14.17.3
+node_version: 14.17.5
 
 # Ruby
 # https://www.ruby-lang.org/en/downloads/
@@ -26,7 +26,7 @@ rbenv_path: ~/.rbenv/bin/rbenv
 
 # gcloud
 # https://cloud.google.com/sdk/docs/release-notes
-gcloud_version: 348.0.0
+gcloud_version: 352.0.0
 gcloud_tarball: "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-{{ gcloud_version }}-linux-x86_64.tar.gz"
 gcloud_dir: ~/.google-cloud-sdk
 gcloud_components:
@@ -37,7 +37,6 @@ gcloud_components:
 - app-engine-python
 - app-engine-python-extras
 - kubectl
-- skaffold
 - kustomize
 
 symbolic_links:
@@ -67,3 +66,9 @@ github_tarball_releases:
   version: v0.85.0
   asset: hugo_0.85.0_Linux-64bit.tar.gz
   extra_opts: []
+
+binary_releases:
+- url: https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+  name: skaffold
+- url: https://github.com/vrothberg/vgrep/releases/download/v2.5.1/vgrep_2.5.1_Linux_x86_64
+  name: vgrep
