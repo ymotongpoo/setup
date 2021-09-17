@@ -1,4 +1,28 @@
 ---
+- name: Add Regolith apt repositories
+  ansible.builtin.apt_repository:
+    repo: "ppa:regolith-linux/release"
+    state: "present"
+  become: yes
+
+- name: Update apt repository
+  ansible.builtin.apt:
+    update_cache: yes
+  become: yes
+
+- name: Install Regolith
+  ansible.builtin.apt:
+    name: regolith-desktop-standard
+    state: latest
+  become: yes
+
+- name: Install packages for desktop
+  ansible.builtin.apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ desktop_apt_packages }}"
+  become: yes
+
 - name: Download nord-gnome-terminal
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/arcticicestudio/nord-gnome-terminal/develop/src/nord.sh

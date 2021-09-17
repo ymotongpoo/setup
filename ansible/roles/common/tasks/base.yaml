@@ -10,6 +10,13 @@
     path: ~/personal
   register: personal_target_dir
 
+- name: Create $HOME/bin directory
+  ansible.builtin.file:
+    path: ~/bin
+    state: directory
+    mode: 0644
+
+# TODO(ymotongpoo): Replace local environment dependency with generic method
 - name: Distribute ssh private key for GitHub
   ansible.builtin.copy:
     src: /workspace/github-nopass

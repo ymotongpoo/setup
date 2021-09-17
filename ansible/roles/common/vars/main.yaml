@@ -1,7 +1,7 @@
 ---
 # Go
 # https://golang.org/dl/
-go_install_version: 1.17
+go_install_version: 1.17.1
 go_tarball_checksum: "sha256:6bf89fc4f5ad763871cf7eac80a2d594492de7a818303283f1366a7f6a30372d"
 goroot: "/home/{{ ansible_env.USER }}/.go"
 gopath: "/home/{{ ansible_env.USER }}/go"
@@ -12,12 +12,12 @@ openjdk_tarball: https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/dow
 
 # Kotlin
 # https://kotlinlang.org/docs/releases.html#release-details
-kotlin_version: 1.5.21
+kotlin_version: 1.5.30
 kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotlin_version }}/kotlin-native-linux-{{ kotlin_version }}.tar.gz"
 
 # Node
 # https://nodejs.org/en/download/
-node_version: 14.17.5
+node_version: 14.17.6
 
 # Ruby
 # https://www.ruby-lang.org/en/downloads/
@@ -26,7 +26,7 @@ rbenv_path: ~/.rbenv/bin/rbenv
 
 # gcloud
 # https://cloud.google.com/sdk/docs/release-notes
-gcloud_version: 352.0.0
+gcloud_version: 357.0.0
 gcloud_tarball: "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-{{ gcloud_version }}-linux-x86_64.tar.gz"
 gcloud_dir: ~/.google-cloud-sdk
 gcloud_components:
@@ -50,6 +50,8 @@ symbolic_links:
   dest: ~/.emacs.d
 - src: ~/.dotfiles/.tmux.conf.linux
   dest: ~/.tmux.conf
+- src: ~/.dotfiles/.screenrc
+  dest: ~/.screenrc
 - src: ~/.dotfiles/.Xresources
   dest: ~/.Xresources
 
@@ -59,12 +61,12 @@ github_tarball_releases:
   asset: peco_linux_amd64.tar.gz
   extra_opts: ["--strip-components=1"]
 - repo: grafana/k6
-  version: v0.33.0
-  asset: k6-v0.33.0-linux-amd64.tar.gz
+  version: v0.34.1
+  asset: k6-v0.34.1-linux-amd64.tar.gz
   extra_opts: ["--strip-components=1"]
 - repo: gohugoio/hugo
-  version: v0.85.0
-  asset: hugo_0.85.0_Linux-64bit.tar.gz
+  version: v0.88.1
+  asset: hugo_0.88.1_Linux-64bit.tar.gz
   extra_opts: []
 
 binary_releases:
