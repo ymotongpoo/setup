@@ -13,7 +13,7 @@ openjdk_tarball: https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/dow
 # Kotlin
 # https://kotlinlang.org/docs/releases.html#release-details
 kotlin_version: 1.6.0
-kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotlin_version }}/kotlin-native-linux-{{ kotlin_version }}.tar.gz"
+kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotlin_version }}/kotlin-native-linux-x86_64-{{ kotlin_version }}.tar.gz"
 
 # Node
 # https://nodejs.org/en/download/
