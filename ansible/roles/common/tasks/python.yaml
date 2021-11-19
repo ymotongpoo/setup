@@ -5,14 +5,14 @@
     state: directory
     mode: 0755
   tags:
-  - python
+    - python
 
 - name: Get the status of Python venv root directory
   ansible.builtin.stat:
     path: ~/python
   register: venv_root
   tags:
-  - python
+    - python
 
 - name: Copy requirements.txt
   ansible.builtin.template:
@@ -20,14 +20,14 @@
     dest: "{{ venv_root.stat.path }}/requirements.txt"
   when: venv_root.stat.exists
   tags:
-  - python
+    - python
 
 - name: Confirm the existance of requirements.txt
   ansible.builtin.stat:
     path: "{{ venv_root.stat.path }}/requirements.txt"
   register: requirements_file
   tags:
-  - python
+    - python
 
 - name: Update pip in misc venv
   ansible.builtin.pip:
@@ -37,7 +37,7 @@
     virtualenv_command: "/usr/bin/python3 -m venv"
   when: venv_root.stat.exists
   tags:
-  - python
+    - python
 
 - name: Install Python packages into misc venv
   ansible.builtin.pip:
@@ -46,4 +46,4 @@
     virtualenv_command: "/usr/bin/python3 -m venv"
   when: venv_root.stat.exists
   tags:
-  - python
+    - python

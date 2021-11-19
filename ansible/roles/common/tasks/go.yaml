@@ -13,15 +13,15 @@
     mode_codebase: 0755
     go_checksum: "{{ go_tarball_checksum }}"
     go_get:
-    - name: dlv
-      url: github.com/go-delve/delve/cmd/dlv
-      modules: true
-    - name: lazydocker
-      url: github.com/jesseduffield/lazydocker
-      modules: true
+      - name: dlv
+        url: github.com/go-delve/delve/cmd/dlv
+        modules: true
+      - name: lazydocker
+        url: github.com/jesseduffield/lazydocker
+        modules: true
   become: yes
   tags:
-  - go
+    - go
 
 - name: Change permission of GOROOT
   ansible.builtin.file:
@@ -32,7 +32,7 @@
     recurse: yes
   become: yes
   tags:
-  - go
+    - go
 
 - name: Change permission of GOPATH
   ansible.builtin.file:
@@ -43,4 +43,4 @@
     recurse: yes
   become: yes
   tags:
-  - go
+    - go

@@ -33,4 +33,3 @@
     name: trizen
     use: makepkg
     state: latest
-

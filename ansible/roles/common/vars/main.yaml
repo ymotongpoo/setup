@@ -1,7 +1,7 @@
 ---
 # Go
 # https://golang.org/dl/
-go_install_version: 1.17.1
+go_install_version: 1.17.3
 go_tarball_checksum: "sha256:6bf89fc4f5ad763871cf7eac80a2d594492de7a818303283f1366a7f6a30372d"
 goroot: "/home/{{ ansible_env.USER }}/.go"
 gopath: "/home/{{ ansible_env.USER }}/go"
@@ -12,12 +12,12 @@ openjdk_tarball: https://github.com/AdoptOpenJDK/openjdk15-binaries/releases/dow
 
 # Kotlin
 # https://kotlinlang.org/docs/releases.html#release-details
-kotlin_version: 1.5.30
+kotlin_version: 1.6.0
 kotlin_tarball: "https://github.com/JetBrains/kotlin/releases/download/v{{ kotlin_version }}/kotlin-native-linux-{{ kotlin_version }}.tar.gz"
 
 # Node
 # https://nodejs.org/en/download/
-node_version: 14.17.6
+node_version: 16.13.0
 
 # Ruby
 # https://www.ruby-lang.org/en/downloads/
@@ -26,51 +26,51 @@ rbenv_path: ~/.rbenv/bin/rbenv
 
 # gcloud
 # https://cloud.google.com/sdk/docs/release-notes
-gcloud_version: 357.0.0
+gcloud_version: 365.0.0
 gcloud_tarball: "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-{{ gcloud_version }}-linux-x86_64.tar.gz"
 gcloud_dir: ~/.google-cloud-sdk
 gcloud_components:
-- beta
-- alpha
-- gsutil
-- app-engine-go
-- app-engine-python
-- app-engine-python-extras
-- kubectl
-- kustomize
+  - beta
+  - alpha
+  - gsutil
+  - app-engine-go
+  - app-engine-python
+  - app-engine-python-extras
+  - kubectl
+  - kustomize
 
 symbolic_links:
-- src: ~/.dotfiles/starship.toml
-  dest: ~/.config/starship.toml
-- src: ~/.dotfiles/.zshrc
-  dest: ~/.zshrc
-- src: ~/.dotfiles/.zshenv.linux
-  dest: ~/.zshenv
-- src: ~/.dotfiles/.emacs.d
-  dest: ~/.emacs.d
-- src: ~/.dotfiles/.tmux.conf.linux
-  dest: ~/.tmux.conf
-- src: ~/.dotfiles/.screenrc
-  dest: ~/.screenrc
-- src: ~/.dotfiles/.Xresources
-  dest: ~/.Xresources
+  - src: ~/.dotfiles/starship.toml
+    dest: ~/.config/starship.toml
+  - src: ~/.dotfiles/.zshrc
+    dest: ~/.zshrc
+  - src: ~/.dotfiles/.zshenv.linux
+    dest: ~/.zshenv
+  - src: ~/.dotfiles/.emacs.d
+    dest: ~/.emacs.d
+  - src: ~/.dotfiles/.tmux.conf.linux
+    dest: ~/.tmux.conf
+  - src: ~/.dotfiles/.screenrc
+    dest: ~/.screenrc
+  - src: ~/.dotfiles/.Xresources
+    dest: ~/.Xresources
 
 github_tarball_releases:
-- repo: peco/peco
-  version: v0.5.10
-  asset: peco_linux_amd64.tar.gz
-  extra_opts: ["--strip-components=1"]
-- repo: grafana/k6
-  version: v0.34.1
-  asset: k6-v0.34.1-linux-amd64.tar.gz
-  extra_opts: ["--strip-components=1"]
-- repo: gohugoio/hugo
-  version: v0.88.1
-  asset: hugo_0.88.1_Linux-64bit.tar.gz
-  extra_opts: []
+  - repo: peco/peco
+    version: v0.5.10
+    asset: peco_linux_amd64.tar.gz
+    extra_opts: ["--strip-components=1"]
+  - repo: grafana/k6
+    version: v0.34.1
+    asset: k6-v0.34.1-linux-amd64.tar.gz
+    extra_opts: ["--strip-components=1"]
+  - repo: gohugoio/hugo
+    version: v0.88.1
+    asset: hugo_0.88.1_Linux-64bit.tar.gz
+    extra_opts: []
 
 binary_releases:
-- url: https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-  name: skaffold
-- url: https://github.com/vrothberg/vgrep/releases/download/v2.5.1/vgrep_2.5.1_Linux_x86_64
-  name: vgrep
+  - url: https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+    name: skaffold
+  - url: https://github.com/vrothberg/vgrep/releases/download/v2.5.1/vgrep_2.5.1_Linux_x86_64
+    name: vgrep

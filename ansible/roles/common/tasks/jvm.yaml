@@ -5,21 +5,21 @@
     recurse: yes
   become: yes
   tags:
-  - jvm
-  - kotlin
+    - jvm
+    - kotlin
 
 - name: Install OpenJDK
   ansible.builtin.unarchive:
     src: "{{ openjdk_tarball }}"
     dest: "/opt/openjdk/{{ java_version }}"
     extra_opts:
-    - --strip-components=1
+      - --strip-components=1
     remote_src: yes
     mode: 0755
   become: yes
   tags:
-  - jvm
-  - kotlin
+    - jvm
+    - kotlin
 
 - name: Create Kotlin install target
   ansible.builtin.file:
@@ -27,16 +27,16 @@
     state: directory
   become: yes
   tags:
-  - jvm
-  - kotlin
+    - jvm
+    - kotlin
 
 - name: Install Kotlin
   ansible.builtin.unarchive:
     src: "{{ kotlin_tarball }}"
     dest: /opt/kotlin
     extra_opts:
-    - --strip-components=1
+      - --strip-components=1
     remote_src: yes
   become: yes
   tags:
-  - kotlin
+    - kotlin

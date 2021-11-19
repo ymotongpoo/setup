@@ -4,34 +4,34 @@
     repo: https://github.com/rbenv/rbenv.git
     dest: ~/.rbenv
   tags:
-  - ruby
+    - ruby
 
 - name: Install ruby-build
   ansible.builtin.git:
     repo: https://github.com/rbenv/ruby-build.git
     dest: ~/.rbenv/plugins/ruby-build
   tags:
-  - ruby
+    - ruby
 
 - name: Install Ruby via rbenv
   ansible.builtin.shell:
     cmd: "{{ rbenv_path }} install {{ ruby_version }}"
   tags:
-  - ruby
+    - ruby
 
 - name: Relogin to refresh .zshrc setting
   meta: reset_connection
   tags:
-  - ruby
+    - ruby
 
 - name: Rehash rebenv
   ansible.builtin.shell:
     cmd: "{{ rbenv_path }} global {{ ruby_version }} && {{ rbenv_path }} rehash"
   tags:
-  - ruby
+    - ruby
 
 - name: Install bundler
   ansible.builtin.shell:
     cmd: ~/.rbenv/shims/gem install -q bundler
   tags:
-  - ruby
+    - ruby

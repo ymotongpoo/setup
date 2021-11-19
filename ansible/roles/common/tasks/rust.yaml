@@ -5,11 +5,11 @@
     return_content: yes
   register: rustup_installer
   tags:
-  - rust
+    - rust
 
 - name: Run rustup installer
   ansible.builtin.shell:
     cmd: sh -s -- -y
     stdin: "{{ rustup_installer.content }}"
   tags:
-  - rust
+    - rust

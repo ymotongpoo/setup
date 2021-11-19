@@ -1,4 +1,4 @@
 ---
 # https://github.com/kewlfft/ansible-aur
 dependencies:
-- kewlfft.aur
+  - kewlfft.aur

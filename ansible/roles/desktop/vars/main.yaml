@@ -1,9 +1,9 @@
 desktop_apt_packages:
-- name: fonts-noto-cjk
-  state: latest
-- name: fonts-noto-cjk-extra
-  state: latest
-- name: trash-cli
-  state: latest
-- name: google-chrome-stable
-  state: latest
+  - name: fonts-noto-cjk
+    state: latest
+  - name: fonts-noto-cjk-extra
+    state: latest
+  - name: trash-cli
+    state: latest
+  - name: google-chrome-stable
+    state: latest

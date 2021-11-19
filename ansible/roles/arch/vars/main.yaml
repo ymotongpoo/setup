@@ -1,64 +1,64 @@
 ---
 arch_packages:
-- name: ca-certificates
-  state: latest
-- name: ca-certificates-mozilla
-  state: latest
-- name: gnupg
-  state: latest
-- name: unzip
-  state: latest
-- name: wget
-  state: latest
-- name: curl
-  state: latest
-- name: git
-  state: latest
-- name: zsh
-  state: latest
-- name: base-devel
-  state: latest
-- name: emacs
-  state: latest
-- name: vim
-  state: latest
-- name: python3
-  state: latest
-- name: python-pip
-  state: latest
-- name: tmux
-  state: latest
-- name: jq
-  state: latest
-- name: fzf
-  state: latest
-- name: fd
-  state: latest
-- name: the_silver_searcher
-  state: latest
-- name: sysstat
-  state: latest
-- name: htop
-  state: latest
-- name: atop
-  state: latest
-- name: nethogs
-  state: latest
-- name: vnstat
-  state: latest
-- name: nmon
-  state: latest
-- name: xclip
-  state: latest
-- name: ctop
-  state: latest
-- name: terraform
-  state: latest
-- name: packer
-  state: latest
-- name: docker
-  state: latest
-- name: containerd
-  state: latest
-- name: hub
-  state: latest
+  - name: ca-certificates
+    state: latest
+  - name: ca-certificates-mozilla
+    state: latest
+  - name: gnupg
+    state: latest
+  - name: unzip
+    state: latest
+  - name: wget
+    state: latest
+  - name: curl
+    state: latest
+  - name: git
+    state: latest
+  - name: zsh
+    state: latest
+  - name: base-devel
+    state: latest
+  - name: emacs
+    state: latest
+  - name: vim
+    state: latest
+  - name: python3
+    state: latest
+  - name: python-pip
+    state: latest
+  - name: tmux
+    state: latest
+  - name: jq
+    state: latest
+  - name: fzf
+    state: latest
+  - name: fd
+    state: latest
+  - name: the_silver_searcher
+    state: latest
+  - name: sysstat
+    state: latest
+  - name: htop
+    state: latest
+  - name: atop
+    state: latest
+  - name: nethogs
+    state: latest
+  - name: vnstat
+    state: latest
+  - name: nmon
+    state: latest
+  - name: xclip
+    state: latest
+  - name: ctop
+    state: latest
+  - name: terraform
+    state: latest
+  - name: packer
+    state: latest
+  - name: docker
+    state: latest
+  - name: containerd
+    state: latest
+  - name: hub
+    state: latest

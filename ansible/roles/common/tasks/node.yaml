@@ -4,37 +4,37 @@
     repo: https://github.com/nodenv/nodenv.git
     dest: ~/.nodenv
   tags:
-  - node
+    - node
 
 - name: Install node-build
   ansible.builtin.git:
     repo: https://github.com/nodenv/node-build.git
     dest: ~/.nodenv/plugins/node-build
   tags:
-  - node
+    - node
 
 - name: Check nodenv
   ansible.builtin.stat:
     path: ~/.nodenv/bin/nodenv
   register: nodenv_cmd
   tags:
-  - node
+    - node
 
 - name: Relogin to refresh .zshrc setting
   meta: reset_connection
   tags:
-  - node
+    - node
 
 - name: Install node in stable version
   ansible.builtin.shell:
     cmd: "{{ nodenv_cmd.stat.path }} install {{ node_version }}"
   when: nodenv_cmd.stat.exists
   tags:
-  - node
+    - node
 
 - name: Set global node version
   ansible.builtin.shell:
     cmd: "{{ nodenv_cmd.stat.path }} global {{ node_version }}"
   when: nodenv_cmd.stat.exists
   tags:
-  - node
+    - node

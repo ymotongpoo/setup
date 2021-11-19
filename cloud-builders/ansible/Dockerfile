@@ -25,7 +25,7 @@ ENV ansible_requirements \
 
 RUN apt-get update && apt-get install -y ${debian_packages}
 RUN wget https://bootstrap.pypa.io/get-pip.py -O get-pip.py \
-    && python3 get-pip.py && rm get-pip.py
+  && python3 get-pip.py && rm get-pip.py
 COPY requirements.txt requirements.txt
 RUN pip install ${ansible_requirements}
 ENTRYPOINT ["/usr/local/bin/ansible-playbook"]

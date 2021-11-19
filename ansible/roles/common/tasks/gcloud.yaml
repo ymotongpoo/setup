@@ -4,40 +4,40 @@
     path: "{{ gcloud_dir }}"
     state: directory
   tags:
-  - gcloud
+    - gcloud
 
 - name: Unarchive gcloud tarball
   ansible.builtin.unarchive:
     src: "{{ gcloud_tarball }}"
     dest: "{{ gcloud_dir }}"
     extra_opts:
-    - --strip-components=1
+      - --strip-components=1
     remote_src: yes
     mode: 0755
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
   tags:
-  - gcloud
+    - gcloud
 
 - name: Run install script
   ansible.builtin.shell:
     cmd: "{{ gcloud_dir }}/install.sh -q"
   tags:
-  - gcloud
+    - gcloud
 
 - name: Stat gcloud command
   ansible.builtin.stat:
     path: "{{ gcloud_dir }}/bin/gcloud"
   register: gcloud_cmd
   tags:
-  - gcloud
+    - gcloud
 
 - name: Update gcloud components
   ansible.builtin.shell:
     cmd: "{{ gcloud_cmd.stat.path }} components update -q"
   when: gcloud_cmd.stat.exists
   tags:
-  - gcloud
+    - gcloud
 
 - name: Install components
   ansible.builtin.shell:
@@ -45,4 +45,4 @@
   with_items: "{{ gcloud_components }}"
   when: gcloud_cmd.stat.exists
   tags:
-  - gcloud
+    - gcloud

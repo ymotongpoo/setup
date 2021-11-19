@@ -11,7 +11,7 @@ supports:
   platform-name: debian
   release: 10.8
 depends:
-- name: debian-core
-  path: ../debian-core
-- name: common
-  path: ../common
+  - name: debian-core
+    path: ../debian-core
+  - name: common
+    path: ../common
