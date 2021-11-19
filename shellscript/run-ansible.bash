@@ -16,8 +16,10 @@
 
 set -ex
 
+chmod 600 ~/.netrc
+
 ansible-galaxy collection install google.cloud
-ansible-galaxy role install kewlfft.aur
+ansible-galaxy collection install kewlfft.aur
 ansible-galaxy role install fubarhouse.golang
 
 ansible-playbook -i ansible/hosts/inventory.gcp.yaml ansible/debian.yaml

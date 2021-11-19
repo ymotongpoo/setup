@@ -2,7 +2,7 @@
 # Go
 # https://golang.org/dl/
 go_install_version: 1.17.3
-go_tarball_checksum: "sha256:6bf89fc4f5ad763871cf7eac80a2d594492de7a818303283f1366a7f6a30372d"
+go_tarball_checksum: "sha256:9058d167ffe44fffce5d00fe8c0a09dec761a9654debc166b2a9ffe070595b07"
 goroot: "/home/{{ ansible_env.USER }}/.go"
 gopath: "/home/{{ ansible_env.USER }}/go"
 
