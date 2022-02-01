@@ -13,117 +13,116 @@
 // limitations under the License.
 
 terraform {
-    required_version = ">=1.0.0"
+  required_version = ">=1.0.0"
 
-    required_providers {
-        google = ">= 3.56.0"
-    }
+  required_providers {
+    google = ">= 3.56.0"
+  }
 }
 
 provider "google" {
-    project = var.project_id
-    zone = var.zone
-    region = var.region
+  project = var.project_id
+  zone    = var.zone
+  region  = var.region
 }
 variable "project_id" {
-    type = string
-    description = "Google Cloud Platform project ID"
-    default = "development-215403"
+  type        = string
+  description = "Google Cloud Platform project ID"
+  default     = "development-215403"
 }
 
 variable "region" {
-    type = string
-    description = "Google Compute Engine region"
-    default = "asia-northeast1"
+  type        = string
+  description = "Google Compute Engine region"
+  default     = "asia-northeast1"
 }
 
 variable "zone" {
-    type = string
-    description = "Google Compute Engine zone"
-    default = "asia-northeast1-a"
+  type        = string
+  description = "Google Compute Engine zone"
+  default     = "asia-northeast1-a"
 }
 
 variable "distribution" {
-    type = string
-    description = "OS distribution"
-    default = "debian"
+  type        = string
+  description = "OS distribution"
+  default     = "debian"
 }
 
 variable "os_image" {
-    type = map
-    description = "Mapping between OS distribution and image source"
-    default = {
-        "debian": "debian-cloud/debian-10"
-        "ubuntu": "ubuntu-os-cloud/ubuntu-2004-lts"
-        "arch": "projects/arch-linux-gce/global/images/family/arch"
-    }
+  type        = map(any)
+  description = "Mapping between OS distribution and image source"
+  default = {
+    "debian" : "debian-cloud/debian-11"
+    "ubuntu" : "ubuntu-os-cloud/ubuntu-2004-lts"
+    "arch" : "projects/arch-linux-gce/global/images/family/arch"
+  }
 }
 
 variable "gce_ssh_user" {
-    type = string
-    description = "username for SSH"
-    default = "demo"
+  type        = string
+  description = "username for SSH"
+  default     = "demo"
 }
 
 data "google_secret_manager_secret_version" "terraform_ssh_private_key" {
-    provider = google
-    secret = "terraform-ssh-private-key"
-    version = "1"
+  provider = google
+  secret   = "terraform-ssh-private-key"
+  version  = "1"
 }
 
 data "google_secret_manager_secret_version" "terraform_ssh_pub_key" {
-    provider = google
-    secret = "terraform-ssh-pub-key"
-    version = "1"
+  provider = google
+  secret   = "terraform-ssh-pub-key"
+  version  = "1"
 }
 
 
 resource "google_compute_firewall" "dev_http" {
-    name = "dev-http"
-    network = "default"
+  name    = "dev-http"
+  network = "default"
 
-    allow {
-        protocol = "tcp"
-        ports = ["8080"]
-    }
+  allow {
+    protocol = "tcp"
+    ports    = ["8080"]
+  }
 
-    source_ranges = ["0.0.0.0/0"]
-    target_tags = ["tracability-sample"]
+  source_ranges = ["0.0.0.0/0"]
+  target_tags   = ["tracability-sample"]
 }
 
 resource "google_compute_instance" "template-instance" {
-    name = "${var.distribution}-template"
-    machine_type = "e2-standard-4"
-    zone = var.zone
-    tags = ["dev-env"]
-    labels = {
-        "process" = "template"
-    }
+  name         = "${var.distribution}-template"
+  machine_type = "e2-standard-4"
+  zone         = var.zone
+  tags         = ["dev-env"]
+  labels = {
+    "process" = "template"
+  }
 
-    boot_disk {
-        initialize_params {
-            size = 50
-            image = lookup(var.os_image, var.distribution, "debian-cloud/debian-10")
-        }
+  boot_disk {
+    initialize_params {
+      size  = 50
+      image = lookup(var.os_image, var.distribution, "debian-cloud/debian-11")
     }
+  }
+  network_interface {
+    network = "default"
+    access_config {}
+  }
 
-    network_interface {
-        network = "default"
-        access_config {}
-    }
+  scheduling {
+    automatic_restart = true
+  }
 
-    scheduling {
-        automatic_restart = true
-    }
+  depends_on = [google_compute_firewall.dev_http]
 
-    depends_on = [google_compute_firewall.dev_http]
+  service_account {
+    scopes = ["compute-rw", "logging-write", "monitoring"]
+  }
 
-    service_account {
-        scopes = ["compute-rw", "logging-write", "monitoring"]
-    }
-
-    metadata = {
-        block-project-ssh-keys = "true"
-        ssh-keys = "${var.gce_ssh_user}:${data.google_secret_manager_secret_version.terraform_ssh_pub_key.secret_data}"
-    }
+  metadata = {
+    block-project-ssh-keys = "true"
+    ssh-keys               = "${var.gce_ssh_user}:${data.google_secret_manager_secret_version.terraform_ssh_pub_key.secret_data}"
+  }
 }

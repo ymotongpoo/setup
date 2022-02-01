@@ -1,0 +1,22 @@
+---
+- name: Install external apt repository PGP keys
+  ansible.builtin.apt_key:
+    url: "{{ item.url }}"
+    state: "{{ item.state }}"
+  with_items: "{{ pgp_keys }}"
+  when: external
+  become: yes
+
+- name: Add external apt repositories
+  ansible.builtin.apt_repository:
+    repo: "{{ item.repo }}"
+    state: "{{ item.state }}"
+  with_items: "{{ debian_11_apt_repositories }}"
+  when: external
+  become: yes
+
+- name: Update apt repositories
+  ansible.builtin.apt:
+    update_cache: yes
+  when: external
+  become: yes

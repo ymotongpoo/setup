@@ -7,10 +7,10 @@ pgp_keys:
     state: present
 
 # apt repositories
-debian_10_apt_repositories:
-  - repo: deb [arch=amd64] https://download.docker.com/linux/debian buster stable
+debian_11_apt_repositories:
+  - repo: deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable
     state: present
-  - repo: deb [arch=amd64] https://apt.releases.hashicorp.com buster main
+  - repo: deb [arch=amd64] https://apt.releases.hashicorp.com bullseye main
     state: present
 
 # apt packages
