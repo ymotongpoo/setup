@@ -20,3 +20,10 @@
     update_cache: yes
   when: external
   become: yes
+
+- name: Install external apt packages
+  ansible.builtin.apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: "{{ external_apt_packages }}"
+  become: yes
