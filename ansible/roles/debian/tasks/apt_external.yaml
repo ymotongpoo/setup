@@ -26,4 +26,5 @@
     name: "{{ item.name }}"
     state: "{{ item.state }}"
   with_items: "{{ external_apt_packages }}"
+  when: external
   become: yes
