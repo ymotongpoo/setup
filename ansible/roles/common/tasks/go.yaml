@@ -4,8 +4,8 @@
     name: fubarhouse.golang
   vars:
     go_version: "{{ go_install_version }}"
-    GOPATH: "{{ goroot }}"
-    GOROOT: "{{ gopath }}"
+    GOPATH: "{{ gopath }}"
+    GOROOT: "{{ goroot }}"
     GOPROXY: https://proxy.golang.org
     GO111MODULE: "on"
     GOOS: linux
@@ -27,7 +27,6 @@
   ansible.builtin.file:
     path: "{{ goroot }}"
     owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: 0755
     recurse: yes
   become: yes
@@ -38,7 +37,6 @@
   ansible.builtin.file:
     path: "{{ gopath }}"
     owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: 0755
     recurse: yes
   become: yes

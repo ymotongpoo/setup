@@ -3,8 +3,8 @@
 # https://golang.org/dl/
 go_install_version: 1.17.3
 go_tarball_checksum: "sha256:550f9845451c0c94be679faf116291e7807a8d78b43149f9506c1b15eb89008c"
-goroot: "/home/{{ ansible_env.USER }}/.go"
-gopath: "/home/{{ ansible_env.USER }}/go"
+goroot: "{{ ansible_env.HOME }}/.go"
+gopath: "{{ ansible_env.HOME }}/go"
 
 # Java
 java_version: 15

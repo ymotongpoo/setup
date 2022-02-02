@@ -3,18 +3,13 @@
   ansible.builtin.file:
     path: ~/personal
     state: directory
-    mode: 0644
+    mode: 0755
+    owner: "{{ ansible_user.USER }}"
 
 - name: Get the status of personal target directory
   ansible.builtin.stat:
     path: ~/personal
   register: personal_target_dir
-
-- name: Create $HOME/bin directory
-  ansible.builtin.file:
-    path: ~/bin
-    state: directory
-    mode: 0644
 
 # TODO(ymotongpoo): Replace local environment dependency with generic method
 - name: Distribute ssh private key for GitHub
@@ -22,6 +17,7 @@
     src: /workspace/github-nopass
     dest: ~/.ssh/github-nopass
     mode: 0600
+  when: external
 
 - name: Clone dotfile repository
   ansible.builtin.git:
@@ -50,12 +46,17 @@
     state: directory
     mode: 0755
     owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
+
+- name: Get the status of personal binary directory
+  ansible.builtin.stat:
+    path: ~/personal
+  register: personal_bin_dir
 
 - name: Change default shell
   ansible.builtin.user:
-    name: demo
+    name: "{{ ansible_env.USER }}"
     shell: /usr/bin/zsh
+  when: external
   become: yes
 
 - name: Fetch starship install script

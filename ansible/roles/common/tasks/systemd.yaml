@@ -10,6 +10,7 @@
     name: docker
     state: started
     enabled: yes
+  when: external
   become: yes
 
 - name: Register containerd as startup service and run
@@ -17,4 +18,5 @@
     name: containerd
     state: started
     enabled: yes
+  when: external
   become: yes

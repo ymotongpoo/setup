@@ -2,7 +2,7 @@
 - name: Install binary release archive and extraction
   ansible.builtin.unarchive:
     src: "https://github.com/{{ item.repo }}/releases/download/{{ item.version }}/{{ item.asset }}"
-    dest: "/home/{{ ansible_user }}/bin"
+    dest: "{{ ansible_env.HOME }}/bin"
     remote_src: yes
     extra_opts: "{{ item.extra_opts }}"
   with_items: "{{ github_tarball_releases }}"
@@ -10,6 +10,6 @@
 - name: Install binary release
   ansible.builtin.get_url:
     url: "{{ item.url }}"
-    dest: "/home/{{ ansible_user }}/bin/{{ item.name }}"
+    dest: "{{ ansible_env.HOME }}/bin/{{ item.name }}"
     mode: 0755
   with_items: "{{ binary_releases }}"
